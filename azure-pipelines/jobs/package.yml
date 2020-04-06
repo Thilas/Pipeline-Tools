@@ -1,0 +1,52 @@
+parameters:
+- {name: vmImage, type: string}
+- {name: version, type: string}
+- {name: connectedServiceName, type: string}
+- {name: publisherId, type: string}
+- {name: extensionId, type: string}
+- {name: extensionName, type: string}
+- {name: artifact, type: string}
+
+jobs:
+- template: job-base.yml
+  parameters:
+    name: package
+    displayName: Package
+    vmImage: ${{ parameters.vmImage }}
+
+    steps:
+    - task: TfxInstaller@2
+      displayName: Use Node CLI for Azure DevOps
+      inputs:
+        version: v0.6.x
+        checkLatest: true
+
+    - ${{ if eq(parameters.version, 'Automatic') }}:
+      - task: QueryAzureDevOpsExtensionVersion@2
+        displayName: Query extension version
+        inputs:
+          connectTo: VsTeam
+          connectedServiceName: ${{ parameters.connectedServiceName }}
+          publisherId: ${{ parameters.publisherId }}
+          extensionId: ${{ parameters.extensionId }}
+          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+            versionAction: Minor
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+            versionAction: Patch
+          setBuildNumber: true
+
+    - task: PackageAzureDevOpsExtension@2
+      displayName: Package extension
+      name: package
+      inputs:
+        patternManifest: vss-extension.json
+        publisherId: ${{ parameters.publisherId }}
+        extensionId: ${{ parameters.extensionId }}
+        extensionName: ${{ parameters.extensionName }}
+        extensionVersion: $(Build.BuildNumber)
+        updateTasksVersion: true
+        updateTasksVersionType: minor
+
+    - publish: $(package.Extension.OutputPath)
+      displayName: Publish ${{ parameters.artifact }} artifact
+      artifact: ${{ parameters.artifact }}

@@ -1,0 +1,41 @@
+{
+  "id": "dc80f424-aa42-4b2b-8c89-f52574461a14",
+  "name": "PipelineToolsListApps",
+  "friendlyName": "Pipeline-Tools List Apps",
+  "description": "Lists all applications installed on the Azure Pipelines agent.",
+  "helpMarkDown": "Lists all applications installed on the Azure Pipelines agent.",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "runsOn": [
+    "Agent",
+    "DeploymentGroup"
+  ],
+  "author": "Thomas Démoulins",
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.164.0",
+  "instanceNameFormat": "List Apps",
+  "inputs": [
+    {
+      "name": "debugOnly",
+      "type": "boolean",
+      "label": "Execute on Debug Only",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "If checked, executes only when **system.debug** is set to **true**."
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "$(currentDirectory)/listApps.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}

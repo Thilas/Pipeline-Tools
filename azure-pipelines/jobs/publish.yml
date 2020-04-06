@@ -1,0 +1,26 @@
+parameters:
+- {name: vmImage, type: string, default: $(vmImage)}
+- {name: connectedServiceName, type: string, default: $(connectedServiceName)}
+- {name: artifact, type: string, default: $(artifact)}
+
+jobs:
+- template: deployment-base.yml
+  parameters:
+    name: publish
+    displayName: Publish
+    vmImage: ${{ parameters.vmImage }}
+    environment: ${{ parameters.connectedServiceName }}
+
+    steps:
+    - template: ../steps/download-artifact.yml
+      parameters:
+        artifact: ${{ parameters.artifact }}
+        path: $(Build.StagingDirectory)/${{ parameters.artifact }}
+
+    - task: PublishAzureDevOpsExtension@2
+      displayName: Publish extension
+      inputs:
+        connectTo: VsTeam
+        connectedServiceName: $(connectedServiceName)
+        fileType: vsix
+        vsixFile: $(Build.StagingDirectory)/${{ parameters.artifact }}/*.vsix

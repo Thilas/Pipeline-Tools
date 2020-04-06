@@ -1,0 +1,59 @@
+parameters:
+- name: version
+  displayName: Version
+  type: string
+  default: Automatic
+
+name: ${{ parameters.version }}
+
+variables:
+  vmImage: windows-latest
+  connectedServiceName: Visual Studio Marketplace
+  publisherId: thomas-demoulins
+  extensionId: pipeline-tools-extension
+  extensionName: Pipeline-Tools Extension
+  artifact: VSIX
+  gitHubConnection: GitHub Releases
+
+trigger:
+- master
+pr:
+- master
+
+stages:
+- stage: build
+  displayName: Build
+
+  jobs:
+  - template: azure-pipelines/jobs/package.yml
+    parameters:
+      vmImage: $(vmImage)
+      version: ${{ parameters.version }}
+      connectedServiceName: $(connectedServiceName)
+      publisherId: $(publisherId)
+      extensionId: $(extensionId)
+      extensionName: $(extensionName)
+      artifact: $(artifact)
+
+  - template: azure-pipelines/jobs/test.yml
+    parameters:
+      vmImage: $(vmImage)
+
+- stage: deploy
+  displayName: Deploy
+  dependsOn: build
+
+  jobs:
+  - template: azure-pipelines/jobs/release.yml
+    parameters:
+      vmImage: $(vmImage)
+      gitHubConnection: $(gitHubConnection)
+      artifact: $(artifact)
+      extensionName: $(extensionName)
+
+  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+    - template: azure-pipelines/jobs/publish.yml
+      parameters:
+        vmImage: $(vmImage)
+        connectedServiceName: $(connectedServiceName)
+        artifact: $(artifact)

@@ -1,0 +1,40 @@
+parameters:
+- {name: vmImage, type: string}
+
+jobs:
+- template: job-base.yml
+  parameters:
+    name: test
+    displayName: Test
+    vmImage: ${{ parameters.vmImage }}
+
+    steps:
+    - powershell: choco install pester -y
+      displayName: Install Pester
+
+    # Using pwsh instead of powershell because of a huge performance issue
+    - pwsh: ./runTests.ps1
+      displayName: Run tests
+
+    - task: PublishTestResults@2
+      displayName: Publish test results
+      inputs:
+        testResultsFormat: NUnit
+        testResultsFiles: results.xml
+      condition: succeededOrFailed()
+
+    - task: reportgenerator@4
+      displayName: Generate code coverage report
+      inputs:
+        reports: coverage.xml
+        targetdir: Coverage
+        reporttypes: HtmlInline_AzurePipelines_Dark;Badges
+        sourcedirs: $(Pipeline.Workspace)
+        tag: v$(Build.BuildNumber)
+
+    - task: PublishCodeCoverageResults@1
+      displayName: Publish code coverage
+      inputs:
+        codeCoverageTool: JaCoCo
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage.xml
+        reportDirectory: $(System.DefaultWorkingDirectory)/Coverage

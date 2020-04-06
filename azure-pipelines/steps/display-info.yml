@@ -1,0 +1,3 @@
+steps:
+- script: set
+  displayName: Display environment variables

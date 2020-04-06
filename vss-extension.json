@@ -1,0 +1,135 @@
+{
+  "manifestVersion": 1,
+  "id": "pipeline-tools-extension",
+  "name": "Pipeline-Tools Extension",
+  "version": "2.0.0",
+  "public": true,
+  "publisher": "thomas-demoulins",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "description": "Various pipeline tasks to help extend diagnostics and runs retention.",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "diagnostics",
+    "list files",
+    "list directories",
+    "pipeline comments",
+    "retention"
+  ],
+  "content": {
+    "details": {
+      "path": "README.md"
+    }
+  },
+  "icons": {
+    "default": "extension-icon.png"
+  },
+  "files": [
+    {
+      "path": "PipelineToolsComments"
+    },
+    {
+      "path": "PipelineToolsListApps"
+    },
+    {
+      "path": "PipelineToolsListFiles"
+    },
+    {
+      "path": "PipelineToolsListSystemInfo"
+    },
+    {
+      "path": "PipelineToolsListVariables"
+    },
+    {
+      "path": "PipelineToolsRetainRun"
+    }
+  ],
+  "scopes": [
+    "vso.build_execute"
+  ],
+  "contributions": [
+    {
+      "id": "73a1d634-7428-4cf9-a943-c56b864cd10f",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsComments"
+      }
+    },
+    {
+      "id": "dc80f424-aa42-4b2b-8c89-f52574461a14",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsListApps"
+      }
+    },
+    {
+      "id": "e44ad6a1-f9fe-4e22-9061-71462f4865f1",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsListFiles"
+      }
+    },
+    {
+      "id": "b66e478c-8a36-44a0-b97c-801d1c15e11a",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsListSystemInfo"
+      }
+    },
+    {
+      "id": "1c0a2003-8417-4f51-94c0-9d9ec0daca92",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsListVariables"
+      }
+    },
+    {
+      "id": "ba5515d0-1127-4ece-b9ba-8fd8053439d9",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PipelineToolsRetainRun"
+      }
+    }
+  ],
+  "links": {
+    "home": {
+      "uri": "https://thilas.github.io/Pipeline-Tools/"
+    },
+    "repository": {
+      "uri": "https://github.com/Thilas/Pipeline-Tools"
+    },
+    "support": {
+      "uri": "https://github.com/Thilas/Pipeline-Tools/issues"
+    },
+    "issues": {
+      "uri": "https://github.com/Thilas/Pipeline-Tools/issues"
+    }
+  },
+  "branding": {
+    "color": "#1EA5CE",
+    "theme": "dark"
+  }
+}

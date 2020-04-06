@@ -1,0 +1,49 @@
+{
+  "id": "e44ad6a1-f9fe-4e22-9061-71462f4865f1",
+  "name": "PipelineToolsListFiles",
+  "friendlyName": "Pipeline-Tools List Files",
+  "description": "Recursively lists all files and directories beneath the specified directory.",
+  "helpMarkDown": "Recursively lists all files and directories beneath the specified directory.",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "runsOn": [
+    "Agent",
+    "DeploymentGroup"
+  ],
+  "author": "Thomas Démoulins",
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.164.0",
+  "instanceNameFormat": "List Files in $(rootDir)",
+  "inputs": [
+    {
+      "name": "rootDir",
+      "type": "filePath",
+      "label": "Root Directory",
+      "defaultValue": "$(Build.SourcesDirectory)",
+      "required": false,
+      "helpMarkDown": "The root directory to list files and directories under when this task is ran."
+    },
+    {
+      "name": "debugOnly",
+      "type": "boolean",
+      "label": "Execute on Debug Only",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "If checked, executes only when **system.debug** is set to **true**."
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "$(currentDirectory)/listFiles.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}

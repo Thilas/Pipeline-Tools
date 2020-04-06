@@ -1,95 +1,82 @@
-# VSTS-Tools
-![Build Status](https://devmatter.visualstudio.com/DefaultCollection/_apis/public/build/definitions/bd278cd4-6a00-4e7d-9f77-026bdef28849/10/badge)
+# Pipeline-Tools
 
-VSTS-Tools is provided primarily as a set of examples for calling various REST APIs within Visual Studio Team Services (VSTS), VSTS-Tools  is a collection of 
-command-line utilities for interacting with VSTS.
+This extension provides several pipeline tasks that can help you diagnose your pipelines as well as control the retention of completed runs. The tasks are also useful for keeping a running history of environment variables, files and installed apps on your Azure Pipelines agents.
 
-> [View the Road Map](https://github.com/jbramwell/VSTS-Tools/wiki/Road-Map)
+This extension is a fork of [VSTS-Tools Build Extensions](https://marketplace.visualstudio.com/items?itemName=moonspace-labs-llc.vsts-tools-build-extensions) and started fixing warnings in the original tasks.
 
-## VSTS-Keep
-Allows you to set the retention for a specific build to "Keep Forever" or you can also remove the "Keep Forever" flag so the build will follow The
-existing retention rules as configured for your VSTS project. The build to be modified is designated by passing in the Build Number (not the Build
-ID). The Build Number is mapped to the Build ID internally and the retention is set accordingly.
+[![Build Status](https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline-Tools?branchName=master)](https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=10&branchName=master)
 
-### Usage
-There are multiple command-line arguments for calling VSTS-Keep, including:
+## Pipeline-Tools Comments
 
-|Name     |Required|Comments                                                                        |
-|---------|--------|--------------------------------------------------------------------------------|
-|-a       |Yes     |Specifies the VSTS account to use.                                              |
-|-t       |Yes     |Specifies the name of the VSTS team project containing the build to be modified.|
-|-u       |No      |Specifies the User ID used to sign into VSTS (optional if using a PAT).         |
-|-p       |Yes     |Specifies the password or Personal Access Token (PAT) used to sign into VSTS.   |
-|-b       |Yes     |Specifies the build number to set retention on/off for.                         |
-|-k       |No      |If specified, sets to "Keep Forever"; Otherwise, removes the flag.              |
-|-v       |No      |If specified, turns on verbose output.                                          |
+This task allows you to provide some comments about the pipeline definition. For example, you might include information about the order of pipeline tasks and why they are ordered the way they are. You might provide information about the source of some of the variable values. You can include information about any constraints (e.g. time windows) as to when the pipeline can run, etc. Essentially, you can provide whatever comments you want :-)
 
-**Examples**
+There are two parameters that can be set with this task:
 
-Set retention to "Keep Forever" while authenticating with Alternate (Basic) Credentals:
+* Comments - the text of the comments.
+* Include Comments in Log - If checked, the comments will be included in the log file; Otherwise, you will only see the comments in the pipeline definition.
 
-    VSTS-Keep -a MyAccount -t MyProject -u someone@hotmail.com -p MyS3cr3tP@ssw0rd -b 20160303.1 -k
+![Pipeline-Tools Comments](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/Comments.png)
 
-Set retention to "Keep Forever" while authenticating with a Personal Access Token (PAT):
+## Pipeline-Tools List Apps
 
-    VSTS-Keep -a MyAccount -t MyProject -p aq4atoiecgzpt7gtw54dlzfja7vlr3hbkm2kl2pkjmr32obr5juq -b 20160303.1 -k
+This task provides you with a list of all applications installed on the Azure Pipelines agent at the time the pipeline is executed. This task is especially useful on self-hosted agents where you do not have direct access to the file system.
 
-Remove retention while authenticating with a Personal Access Token (PAT):
+There is one parameter that can be set with this task:
 
-    VSTS-Keep -a MyAccount -t MyProject -p aq4atoiecgzpt7gtw54dlzfja7vlr3hbkm2kl2pkjmr32obr5juq -b 20160303.1
+* Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-## VSTS-Get
-Allows you to download a single file or an entire folder from a Git-based repo in VSTS without the need for a Git client.
+![Pipeline-Tools List Apps Image](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListApps.png)
 
-> **NOTE**: TFVC-based repositories are not yet supported by these tools.
+## Pipeline-Tools List Files
 
-### Usage
-There are multiple command-line arguments for calling VSTS-Keep, including:
+This task will list out (in the log) all files beneath the directory specified as the *Root Directory*. This task can be especially useful on self-hosted agents where you do not have direct access to the file system.
 
-|Name     |Required|Comments                                                                          |
-|---------|--------|----------------------------------------------------------------------------------|
-|-a       |Yes     |Specifies the VSTS account to use.                                                |
-|-t       |Yes     |Specifies the name of the VSTS team project.                                      |
-|-r       |Yes     |Specifies the name of the Git repo in VSTS containing the file/folder to download.|
-|-u       |No      |Specifies the User ID used to sign into VSTS (optional if using a PAT).           |
-|-p       |Yes     |Specifies the password or Personal Access Token (PAT) used to sign into VSTS.     |
-|-f       |No      |Specifies the file in VSTS to download.                                           |
-|-o       |No      |Specifies the folder in VSTS to download.                                         |
-|-d       |Yes     |Specifies the destination directory for the download files.                       |
-|-v       |No      |If specified, turns on verbose output.                                            |
+There are two parameters that can be set with this task:
 
-> The argument -f or -o must be specified, but not both.
+* Root Directory - all files and directories beneath the root directory will be listed (recursively).
+* Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-**Examples**
+![Pipeline-Tools List Files Image](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListFiles.png)
 
-Download a folder named "MyProject/UnitTests" with Verbose set to ON:
+## Pipeline-Tools List System Info
 
-    VSTS-Get -a MyAccount -t MyProject -p aq4atoiecgzpt7gtw54dlzfja7vlr3hbkm2kl2pkjmr32obr5juq -r "MyProject" -o "MyProject/UnitTests" -d C:\Downloads -v
+This task will list out (in the log) various system-related information and settings. This task can be especially useful on self-hosted agents where you do not have direct access to the server.
 
-Download a file named "MyProject/UnitTests/UnitTests.cs" with Verbose set to ON:
+There is one parameter that can be set with this task:
 
-    VSTS-Get -a MyAccount -t MyProject -p aq4atoiecgzpt7gtw54dlzfja7vlr3hbkm2kl2pkjmr32obr5juq -r "MyProject" -f "MyProject/UnitTests/UnitTests.cs" -d C:\Downloads -v
+* Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-## VSTS-Users
-Returns a list of VSTS users for a specific account. Along with the user's e-mail address the last date/time of system access as well as the user license type is returned.
+![Pipeline-Tools List System Info Image](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListSystemInfo.png)
 
-### Usage
-There are multiple command-line arguments for calling VSTS-Keep, including:
+## Pipeline-Tools List Variables
 
-|Name     |Required|Comments                                                                        |
-|---------|--------|--------------------------------------------------------------------------------|
-|-a       |Yes     |Specifies the VSTS account to use.                                              |
-|-u       |No      |Specifies the User ID used to sign into VSTS (optional if using a PAT).         |
-|-p       |Yes     |Specifies the password or Personal Access Token (PAT) used to sign into VSTS.   |
-|-h       |No      |Include a header line in the output.                                |
-|-q       |No      |Adds quotation marks to any items that include spaces.              |
+This task will list out (in the log) all variables that are defined at the time it is executed. This task can be especially useful on self-hosted agents where you do not have direct access to the file system.
 
-**Examples**
+There is one parameter that can be set with this task:
 
-Get a list of all VSTS users for a specific account:
+* Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-    VSTS-Users -a MyAccount -p 5lk5beqkqhyn7bbv2jco2aksojk7u43kdoikho3u5tlgsbzc6paq
+![Pipeline-Tools List Variables Image](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListVariables.png)
 
-Get a list of all VSTS users for a specific account including a header line and quotes around any items with spaces:
+## Pipeline-Tools Retain Run
 
-    VSTS-Users -a MyAccount -p 5lk5beqkqhyn7bbv2jco2aksojk7u43kdoikho3u5tlgsbzc6paq -h -q
+This task allows you to retain a run. This is especially handy if you are making use of a 3rd party release tool (e.g. Octopus Deploy) or a custom release process and you want to set the retention after completing the deployment-related pipeline tasks.
+
+There are two parameters that can be set with this task:
+
+* Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
+
+> **IMPORTANT:** If you are not using a YAML pipeline, before you can make use of the *Pipeline-Tools Retain Run* task, you must first configure your pipeline to allow the use of the OAuth token. To do this, go to the **Options** tab of the pipeline definition and select **Allow Scripts to Access OAuth Token**.
+
+![Pipeline-Tools OAuth Image](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/OAuth.png)
+
+## Release History/Road Map
+
+| Release | Description                                   |
+| -------:| --------------------------------------------- |
+| 1.x     | VSTS-Tools Build Extensions original releases |
+| 2.0     | Pipeline-Tools Extension first release        |
+
+## Feedback, Support and Contribution
+
+If you like this set of tasks, please leave a review and rating. If you have any suggestions and/or problems, please [file an issue so I can get it resolved](https://github.com/Thilas/Pipeline-Tools/issues). Any contribution is most welcome.

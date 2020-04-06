@@ -1,0 +1,29 @@
+parameters:
+- {name: vmImage, type: string}
+- {name: gitHubConnection, type: string}
+- {name: artifact, type: string}
+- {name: extensionName, type: string}
+
+jobs:
+- template: deployment-base.yml
+  parameters:
+    name: release
+    displayName: Release
+    vmImage: ${{ parameters.vmImage }}
+    environment: ${{ parameters.gitHubConnection }}
+
+    steps:
+    - template: ../steps/download-artifact.yml
+      parameters:
+        artifact: ${{ parameters.artifact }}
+        path: $(Build.StagingDirectory)/${{ parameters.artifact }}
+
+    - task: GitHubRelease@0
+      displayName: Release extension
+      inputs:
+        gitHubConnection: ${{ parameters.gitHubConnection }}
+        tagSource: manual
+        tag: v$(Build.BuildNumber)
+        title: ${{ parameters.extensionName }} v$(Build.BuildNumber)
+        assets: $(Build.StagingDirectory)/${{ parameters.artifact }}/*
+        isPreRelease: ${{ eq(variables['Build.Reason'], 'PullRequest') }}

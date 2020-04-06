@@ -1,0 +1,30 @@
+parameters:
+- {name: name, type: string}
+- {name: displayName, type: string}
+- {name: vmImage, type: string}
+- {name: environment, type: string}
+- {name: steps, type: stepList}
+- {name: timeoutInMinutes, type: number, default: 10}
+- {name: cancelTimeoutInMinutes, type: number, default: 10}
+
+jobs:
+- deployment: ${{ parameters.name }}
+  displayName: ${{ parameters.displayName }}
+
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+
+  timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
+  cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
+
+  environment: ${{ parameters.environment }}
+
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: none
+
+        - template: ../steps/display-info.yml
+
+        - ${{ parameters.steps }}

@@ -1,0 +1,24 @@
+parameters:
+- {name: name, type: string, default: test}
+- {name: displayName, type: string, default: Test}
+- {name: vmImage, type: string, default: $(vmImage)}
+- {name: steps, type: stepList}
+- {name: timeoutInMinutes, type: number, default: 10}
+- {name: cancelTimeoutInMinutes, type: number, default: 10}
+
+jobs:
+- job: ${{ parameters.name }}
+  displayName: ${{ parameters.displayName }}
+
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+
+  timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
+  cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
+
+  steps:
+  - checkout: self
+
+  - template: ../steps/display-info.yml
+
+  - ${{ parameters.steps }}

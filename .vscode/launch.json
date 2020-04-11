@@ -5,10 +5,39 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "PowerShell Launch Current File",
             "type": "PowerShell",
             "request": "launch",
+            "name": "Build",
+            "script": "${workspaceFolder}/build.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "PowerShell Launch Current File",
             "script": "${file}",
+            "args": [],
+            "cwd": "${file}"
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "PowerShell Launch Current File w/Args Prompt",
+            "script": "${file}",
+            "args": [
+                "${command:SpecifyScriptArgs}"
+            ],
+            "cwd": "${file}"
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "PowerShell Pester Tests Coverage",
+            "script": "${workspaceFolder}/test.ps1",
+            "args": [
+                "-CodeCoverage"
+            ],
             "cwd": "${file}"
         }
     ]

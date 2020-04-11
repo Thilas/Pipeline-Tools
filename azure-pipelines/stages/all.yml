@@ -1,0 +1,65 @@
+parameters:
+- {name: master, type: boolean}
+- {name: automaticVersion, type: boolean}
+- {name: connectedServiceName, type: string, default: Visual Studio Marketplace}
+- {name: publisherId, type: string, default: thomas-demoulins}
+- {name: extensionId, type: string, default: pipeline-tools}
+- {name: extensionName, type: string, default: Pipeline Tools}
+- {name: gitHubConnection, type: string, default: GitHub Releases}
+- {name: artifact, type: string, default: VSIX}
+
+stages:
+- stage: build
+  displayName: Build
+  dependsOn: []
+
+  jobs:
+  - template: ../jobs/build.yml
+    parameters:
+      automaticVersion: ${{ parameters.automaticVersion }}
+      connectedServiceName: ${{ parameters.connectedServiceName }}
+      publisherId: ${{ parameters.publisherId }}
+      extensionId: ${{ parameters.extensionId }}
+      extensionName: ${{ parameters.extensionName }}
+      artifact: ${{ parameters.artifact }}
+
+- stage: unitTests
+  displayName: Unit Tests
+  dependsOn: []
+
+  jobs:
+  - template: ../jobs/test.yml
+    parameters:
+      displayName: Unit
+      vmImage: ubuntu-latest
+      publishCodeCoverage: true
+
+- stage: integrationTests
+  displayName: Integration Tests
+  dependsOn: []
+
+  jobs:
+  - template: ../jobs/test.yml
+    parameters:
+      displayName: Integration
+      vmImage: windows-latest
+
+- ${{ if parameters.master }}:
+  - stage: deploy
+    displayName: Deploy
+    dependsOn:
+    - build
+    - unitTests
+    - integrationTests
+
+    jobs:
+    - template: ../jobs/publish.yml
+      parameters:
+        connectedServiceName: ${{ parameters.connectedServiceName }}
+        artifact: ${{ parameters.artifact }}
+
+    - template: ../jobs/release.yml
+      parameters:
+        gitHubConnection: ${{ parameters.gitHubConnection }}
+        artifact: ${{ parameters.artifact }}
+        extensionName: ${{ parameters.extensionName }}

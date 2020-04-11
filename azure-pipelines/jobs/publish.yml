@@ -1,14 +1,12 @@
 parameters:
-- {name: vmImage, type: string, default: $(vmImage)}
-- {name: connectedServiceName, type: string, default: $(connectedServiceName)}
-- {name: artifact, type: string, default: $(artifact)}
+- {name: connectedServiceName, type: string}
+- {name: artifact, type: string}
 
 jobs:
 - template: deployment-base.yml
   parameters:
-    name: publish
     displayName: Publish
-    vmImage: ${{ parameters.vmImage }}
+    vmImage: ubuntu-latest
     environment: ${{ parameters.connectedServiceName }}
 
     steps:
@@ -17,10 +15,12 @@ jobs:
         artifact: ${{ parameters.artifact }}
         path: $(Build.StagingDirectory)/${{ parameters.artifact }}
 
+    - template: ../steps/use-tfx-cli.yml
+
     - task: PublishAzureDevOpsExtension@2
       displayName: Publish extension
       inputs:
         connectTo: VsTeam
-        connectedServiceName: $(connectedServiceName)
+        connectedServiceName: ${{ parameters.connectedServiceName }}
         fileType: vsix
         vsixFile: $(Build.StagingDirectory)/${{ parameters.artifact }}/*.vsix

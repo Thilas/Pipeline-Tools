@@ -1,7 +1,7 @@
 resources:
   pipelines:
   - pipeline: pipelineTools
-    source: Pipeline-Tools
+    source: Pipeline Tools
     trigger:
       branches:
       - master

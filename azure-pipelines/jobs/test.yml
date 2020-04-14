@@ -33,7 +33,7 @@ jobs:
         sourcedirs: $(Pipeline.Workspace)
         tag: ''
 
-    - ${{ parameters.publishCodeCoverage }}:
+    - ${{ if parameters.publishCodeCoverage }}:
       - task: PublishCodeCoverageResults@1
         displayName: Publish code coverage
         inputs:

@@ -18,7 +18,7 @@ try {
         Get-ChildItem $uninstall -ErrorAction SilentlyContinue `
         | Get-ItemProperty `
         | Where-Object { $_.DisplayName } `
-        | Sort-Object "DisplayName" `
+        | Sort-Object "DisplayName", "DisplayVersion" `
         | Format-Table @(
             "DisplayName" | New-Property -Name "Application"
             "DisplayVersion" | New-Property -Name "Version"

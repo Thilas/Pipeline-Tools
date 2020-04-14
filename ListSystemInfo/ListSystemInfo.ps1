@@ -73,8 +73,7 @@ try {
             "DeviceID" | New-Property -Name "Id"
             "Name" | New-Property -Name "Monitor"
             "MonitorType" | New-Property -Name "Type"
-            "ScreenHeight" | New-Property -Name "Height"
-            "ScreenWidth" | New-Property -Name "Width"
+            New-Property { "{0} x {1}" -f $_.ScreenWidth, $_.ScreenHeight } -Name "Resolution" -Alignment Right
             "Bandwidth"
             New-Property { "{0} x {1}" -f $_.PixelsPerXLogicalInch, $_.PixelsPerYLogicalInch } -Name "Pixels/Logical Inch" -Alignment Right
         ) -AutoSize -Wrap | Write-Output
@@ -90,7 +89,7 @@ try {
         | Format-Table @(
             "DeviceID" | New-Property -Name "Id"
             "Name" | New-Property -Name "Network Adapter"
-            New-Property { $_.Speed / 1000000 } -Name "Speed (Mbit/s)"
+            New-Property { $_.Speed / 1E6 } -Name "Speed (Mbit/s)" -Format "N0"
             New-Property { $network[$_.GUID].DHCPEnabled } -Name "DHCP"
             New-Property { $network[$_.GUID].DNSServerSearchOrder -join "`n" } -Name "DNS Servers"
             New-Property { $network[$_.GUID].DefaultIPGateway -join "`n" } -Name "Default Gateway"

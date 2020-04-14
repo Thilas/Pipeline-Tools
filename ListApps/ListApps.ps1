@@ -10,11 +10,12 @@ try {
     if (!$debugOnly -or ($debugOnly -and $debug)) {
         Import-Module "$PSScriptRoot/ps_modules/Tools" -NoClobber
 
-        $applications = @()
-        $applications += Get-ChildItem "HKCU:/Software/Microsoft/Windows/CurrentVersion/Uninstall"
-        $applications += Get-ChildItem "HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Uninstall"
+        $uninstall = @(
+            "HKCU:/Software/Microsoft/Windows/CurrentVersion/Uninstall"
+            "HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Uninstall"
+        )
 
-        $applications `
+        Get-ChildItem $uninstall -ErrorAction SilentlyContinue `
         | Get-ItemProperty `
         | Where-Object { $_.DisplayName } `
         | Sort-Object "DisplayName" `

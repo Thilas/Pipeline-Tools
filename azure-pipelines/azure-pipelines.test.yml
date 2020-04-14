@@ -1,0 +1,39 @@
+resources:
+  pipelines:
+  - pipeline: pipelineTools
+    source: Pipeline-Tools
+    trigger:
+      branches:
+      - master
+
+name: $(resources.pipeline.pipelineTools.runName)
+
+jobs:
+- template: jobs/job-base.yml
+  parameters:
+    displayName: Test
+    vmImage: windows-latest
+
+    steps:
+    - task: ListSystemInfo@1
+      displayName: List system information
+
+    - task: ListVariables@1
+      displayName: List variables
+
+    - task: ListApps@1
+      displayName: List installed applications
+
+    - task: ListFiles@1
+      displayName: List files
+
+    - task: Comment@1
+      displayName: Comment
+      inputs:
+        comments: |
+          Here are some ...
+          ... awesome comments!
+        includeCommentsInLog: true
+
+    - task: RetainRun@1
+      displayName: Retain run

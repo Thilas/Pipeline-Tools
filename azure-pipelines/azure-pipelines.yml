@@ -14,7 +14,5 @@ pr:
 stages:
 - template: stages/all.yml
   parameters:
-    # master: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/master') }}
+    master: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/master') }}
     automaticVersion: ${{ eq(parameters.version, 'Automatic') }}
-    master: true
-    extensionId: pipeline-tools-extension

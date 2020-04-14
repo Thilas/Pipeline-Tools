@@ -31,7 +31,6 @@ stages:
   - template: ../jobs/test.yml
     parameters:
       displayName: Unit
-      vmImage: ubuntu-latest
       publishCodeCoverage: true
 
 - stage: integrationTests
@@ -42,7 +41,6 @@ stages:
   - template: ../jobs/test.yml
     parameters:
       displayName: Integration
-      vmImage: windows-latest
 
 - ${{ if parameters.master }}:
   - stage: deploy

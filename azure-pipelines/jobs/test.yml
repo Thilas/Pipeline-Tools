@@ -1,13 +1,12 @@
 parameters:
 - {name: displayName, type: string}
-- {name: vmImage, type: string}
 - {name: publishCodeCoverage, type: boolean, default: false}
 
 jobs:
 - template: job-base.yml
   parameters:
     displayName: Test
-    vmImage: ${{ parameters.vmImage }}
+    vmImage: windows-latest
 
     steps:
     - pwsh: ./build.ps1 -Build

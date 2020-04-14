@@ -10,7 +10,7 @@ jobs:
 - template: job-base.yml
   parameters:
     displayName: Build
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
 
     steps:
     - template: ../steps/use-tfx-cli.yml

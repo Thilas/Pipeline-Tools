@@ -9,7 +9,7 @@ Describe "Comment" {
         # Act
         & $sut
         # Assert
-        Assert-MockCalled "Write-Output" -Times 1 -Scope It
+        Assert-MockCalled "Write-Output" -Times 0 -Scope It
     }
 
     It "writes comments when includeCommentsInLog is true" {

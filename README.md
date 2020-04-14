@@ -6,7 +6,7 @@ This extension is a fork of [VSTS-Tools Build Extensions](https://marketplace.vi
 
 [![Build Status](https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline-Tools?branchName=master)](https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=10&branchName=master)
 
-## Comments Task
+## Comment Task
 
 This task allows you to provide some comments about the pipeline definition. For example, you might include information about the order of pipeline tasks and why they are ordered the way they are. You might provide information about the source of some of the variable values. You can include information about any constraints (e.g. time windows) as to when the pipeline can run, etc. Essentially, you can provide whatever comments you want :-)
 
@@ -15,7 +15,7 @@ There are two parameters that can be set with this task:
 * Comments - the text of the comments.
 * Include Comments in Log - If checked, the comments will be included in the log file; Otherwise, you will only see the comments in the pipeline definition.
 
-![Comments task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/Comments.png)
+![Comment task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/Comment.png)
 
 ## List Apps Task
 

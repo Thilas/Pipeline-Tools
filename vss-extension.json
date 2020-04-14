@@ -59,7 +59,7 @@
     "theme": "dark"
   },
   "files": [{
-    "path": "Comments"
+    "path": "Comment"
   }, {
     "path": "ListApps"
   }, {
@@ -72,11 +72,11 @@
     "path": "RetainRun"
   }],
   "contributions": [{
-    "id": "Comments",
+    "id": "Comment",
     "type": "ms.vss-distributed-task.task",
     "targets": ["ms.vss-distributed-task.tasks"],
     "properties": {
-      "name": "Comments"
+      "name": "Comment"
     }
   }, {
     "id": "ListApps",

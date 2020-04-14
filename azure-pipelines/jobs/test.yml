@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - pwsh: ./build.ps1 -Build
-     displayName: Build tasks
+      displayName: Build tasks
 
     - pwsh: ./build.ps1 -${{ parameters.displayName }}Tests -CodeCoverage
       displayName: Run tests

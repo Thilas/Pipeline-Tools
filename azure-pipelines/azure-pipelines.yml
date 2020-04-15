@@ -2,7 +2,7 @@ parameters:
 - name: version
   displayName: Version
   type: string
-  default: Automatic
+  default: 2.2.0
 
 name: ${{ parameters.version }}
 

@@ -15,6 +15,7 @@ try {
         $uninstallPaths = @(
             "HKCU:/Software/Microsoft/Windows/CurrentVersion/Uninstall"
             "HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Uninstall"
+            "HKLM:/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall"
         )
 
         $uninstallPaths | ForEach-Object { { Get-ChildItem $_ }} `

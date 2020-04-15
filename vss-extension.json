@@ -52,11 +52,6 @@
     "type": "git",
     "uri": "https://github.com/Thilas/Pipeline-Tools.git"
   },
-  "badges": [{
-    "href": "https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=10&branchName=master",
-    "uri": "https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline-Tools?branchName=master",
-    "description": "Build Status"
-  }],
   "branding": {
     "color": "#1EA5CE",
     "theme": "dark"

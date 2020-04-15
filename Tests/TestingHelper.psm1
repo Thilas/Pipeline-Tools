@@ -23,10 +23,11 @@ function Restore-EnvironmentVariables {
     )
     $EnvironmentVariables.Keys `
     | ForEach-Object {
-        $item = Get-Item "Env:/$_"
-        if ($EnvironmentVariables.$_ -ne $item.Value) {
-            "Set '$_' back to: {0}" -f $EnvironmentVariables.$_ | Write-Verbose
-            $EnvironmentVariables.$_ | Set-Item "Env:/$_"
+        $value = "{0}" -f $EnvironmentVariables.$_
+        $item = Get-Item "Env:/$_" -ErrorAction SilentlyContinue
+        if ($value -ne $item.Value) {
+            Write-Verbose "Set '$_' back to: $value"
+            Set-Item "Env:/$_" $value
         }
     }
     Get-ChildItem "Env:/" `

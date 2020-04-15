@@ -4,8 +4,8 @@ parameters:
 - {name: environment, type: string}
 - {name: download, type: string, default: none}
 - {name: steps, type: stepList}
-- {name: timeoutInMinutes, type: number, default: 10}
-- {name: cancelTimeoutInMinutes, type: number, default: 10}
+- {name: timeoutInMinutes, type: number, default: 20}
+- {name: cancelTimeoutInMinutes, type: number, default: 5}
 
 jobs:
 - deployment:

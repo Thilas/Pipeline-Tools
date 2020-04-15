@@ -17,18 +17,23 @@ jobs:
     steps:
     - task: ListSystemInfo@1
       displayName: List system information
+      condition: always()
 
     - task: ListVariables@1
       displayName: List variables
+      condition: always()
 
     - task: ListApps@1
       displayName: List installed applications
+      condition: always()
 
     - task: ListFiles@1
       displayName: List files
+      condition: always()
 
     - task: Comment@1
       displayName: Comment
+      condition: always()
       inputs:
         comments: |
           Here are some ...
@@ -37,3 +42,4 @@ jobs:
 
     - task: RetainRun@1
       displayName: Retain run
+      condition: always()

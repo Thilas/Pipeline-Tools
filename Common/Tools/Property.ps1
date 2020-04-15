@@ -52,13 +52,17 @@ function ConvertTo-Unit {
     )
     process {
         $result = $Property | New-Property -Format "N1"
-        $expression = $result.Expression
-        $divisor = Invoke-Expression "1$Unit / 1$From"
-        $name = if ($result.Name) { $result.Name } else { $expression }
-        $result.Expression = if ($expression -is [scriptblock]) {
-            { ($_ | ForEach-Object $expression) / $divisor }.GetNewClosure()
-        } else {
-            { $_.$expression / $divisor }.GetNewClosure()
+        $name = if ($result.Name) { $result.Name } else { $result.Expression }
+        # Creating a new scope as a workaround for a PowerShell bug related to GetNewClosure().
+        # See https://stackoverflow.com/a/24766059
+        $result.Expression = & {
+            $expression = $result.Expression
+            $divisor = Invoke-Expression "1$Unit / 1$From"
+            if ($expression -is [scriptblock]) {
+                { ($_ | ForEach-Object $expression) / $divisor }.GetNewClosure()
+            } else {
+                { $_.$expression / $divisor }.GetNewClosure()
+            }
         }
         $result | New-Property -Name "$name ($Unit)" -Force
     }

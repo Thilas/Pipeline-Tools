@@ -4,7 +4,8 @@ param(
     [switch] $Integration,
     [string] $TestName,
     [string] $Tag,
-    [switch] $CodeCoverage
+    [switch] $CodeCoverage,
+    [switch] $EnableExit
 )
 $ErrorActionPreference = "Stop"
 
@@ -68,4 +69,4 @@ if ($CodeCoverage) {
     }
 }
 
-Invoke-Pester @parameters -EnableExit
+Invoke-Pester @parameters -EnableExit:$EnableExit

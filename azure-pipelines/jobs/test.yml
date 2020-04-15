@@ -12,16 +12,19 @@ jobs:
     - pwsh: ./build.ps1 -Build
       displayName: Build tasks
 
+    - powershell: ./build.ps1 -${{ parameters.displayName }}Tests
+      displayName: Run tests (PowerShell)
+
     - pwsh: ./build.ps1 -${{ parameters.displayName }}Tests -CodeCoverage
-      displayName: Run tests
+      displayName: Run tests (PowerShell Core)
 
     - task: PublishTestResults@2
       displayName: Publish test results
+      condition: succeededOrFailed()
       inputs:
         testResultsFormat: NUnit
         testResultsFiles: TestResults-${{ parameters.displayName }}Tests.xml
         testRunTitle: ${{ parameters.displayName }} Tests
-      condition: succeededOrFailed()
 
     - task: reportgenerator@4
       displayName: Generate code coverage report

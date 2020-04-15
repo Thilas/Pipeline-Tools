@@ -281,12 +281,12 @@ if ($Build) {
 
 if ($UnitTests) {
     # Run unit tests
-    & "$PSScriptRoot/test.ps1" -CodeCoverage:$CodeCoverage
+    & "$PSScriptRoot/test.ps1" -CodeCoverage:$CodeCoverage -EnableExit
 }
 
 if ($IntegrationTests) {
     # Run integration tests
-    & "$PSScriptRoot/test.ps1" -Integration -CodeCoverage:$CodeCoverage
+    & "$PSScriptRoot/test.ps1" -Integration -CodeCoverage:$CodeCoverage -EnableExit
 }
 
 if ($Clear) {

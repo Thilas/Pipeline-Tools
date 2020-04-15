@@ -42,4 +42,5 @@ Available options:
 * `-Integration` runs integration tests instead of default unit tests,
 * `-TestName`  filters `Describe` blocks that match the provided name (wildcards are supported),
 * `-Tag` filters `Describe` blocks based on their `Tag` parameters (wildcards are not supported),
-* `-CodeCoverage` generates a code coverage report.
+* `-CodeCoverage` generates a code coverage report,
+* `-EnableExit` exits with an exit code equal to the number of failed tests once all tests have been run.

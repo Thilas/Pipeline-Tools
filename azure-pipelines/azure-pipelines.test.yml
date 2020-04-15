@@ -5,8 +5,12 @@ resources:
     trigger:
       branches:
       - master
+      - refs/pull/*/merge
 
 name: $(resources.pipeline.pipelineTools.runName)
+
+trigger: none
+pr: none
 
 jobs:
 - template: jobs/job-base.yml

@@ -1,0 +1,18 @@
+parameters:
+- name: version
+  displayName: Version
+  type: string
+  default: Automatic
+
+name: ${{ parameters.version }}
+
+trigger:
+- master
+pr:
+- master
+
+stages:
+- template: stages/all.yml
+  parameters:
+    master: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/master') }}
+    automaticVersion: ${{ eq(parameters.version, 'Automatic') }}

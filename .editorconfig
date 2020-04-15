@@ -1,21 +1,27 @@
-# EditorConfig is awesome: https://EditorConfig.org
+# EditorConfig is awesome: https://editorconfig.org
+# Based on: https://github.com/dotnet/roslyn/blob/master/.editorconfig
 
 # top-most EditorConfig file
 root = true
 
+# Don't use tabs for indentation.
 [*]
 charset = utf-8
 indent_style = space
-indent_size = 4
 trim_trailing_whitespace = true
 insert_final_newline = true
+# (Please don't specify an indent_size here; that has too many unintended consequences.)
 
+# JSON files
 [*.json]
 indent_size = 2
 insert_final_newline = false
 
+# Powershell files
 [*.ps1]
 charset = utf-8-bom
+indent_size = 4
 
+# YAML files
 [*.yml]
 indent_size = 2

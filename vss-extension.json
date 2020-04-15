@@ -1,119 +1,36 @@
 {
   "manifestVersion": 1,
-  "id": "pipeline-tools-extension",
-  "name": "Pipeline-Tools Extension",
+  "id": "pipeline-tools",
+  "name": "Pipeline Tools",
   "version": "2.0.0",
   "public": true,
   "publisher": "thomas-demoulins",
-  "targets": [
-    {
-      "id": "Microsoft.VisualStudio.Services"
-    }
-  ],
+  "targets": [{
+    "id": "Microsoft.VisualStudio.Services"
+  }],
   "description": "Various pipeline tasks to help extend diagnostics and runs retention.",
   "categories": [
     "Azure Pipelines"
   ],
   "tags": [
-    "diagnostics",
-    "list files",
-    "list directories",
-    "pipeline comments",
-    "retention"
+    "comment",
+    "diagnostic",
+    "directory",
+    "file",
+    "retention",
+    "system"
   ],
   "content": {
     "details": {
       "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE"
     }
   },
   "icons": {
     "default": "extension-icon.png"
   },
-  "files": [
-    {
-      "path": "PipelineToolsComments"
-    },
-    {
-      "path": "PipelineToolsListApps"
-    },
-    {
-      "path": "PipelineToolsListFiles"
-    },
-    {
-      "path": "PipelineToolsListSystemInfo"
-    },
-    {
-      "path": "PipelineToolsListVariables"
-    },
-    {
-      "path": "PipelineToolsRetainRun"
-    }
-  ],
-  "scopes": [
-    "vso.build_execute"
-  ],
-  "contributions": [
-    {
-      "id": "73a1d634-7428-4cf9-a943-c56b864cd10f",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsComments"
-      }
-    },
-    {
-      "id": "dc80f424-aa42-4b2b-8c89-f52574461a14",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsListApps"
-      }
-    },
-    {
-      "id": "e44ad6a1-f9fe-4e22-9061-71462f4865f1",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsListFiles"
-      }
-    },
-    {
-      "id": "b66e478c-8a36-44a0-b97c-801d1c15e11a",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsListSystemInfo"
-      }
-    },
-    {
-      "id": "1c0a2003-8417-4f51-94c0-9d9ec0daca92",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsListVariables"
-      }
-    },
-    {
-      "id": "ba5515d0-1127-4ece-b9ba-8fd8053439d9",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "PipelineToolsRetainRun"
-      }
-    }
-  ],
   "links": {
     "home": {
       "uri": "https://thilas.github.io/Pipeline-Tools/"
@@ -128,8 +45,73 @@
       "uri": "https://github.com/Thilas/Pipeline-Tools/issues"
     }
   },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/Thilas/Pipeline-Tools.git"
+  },
+  "badges": [{
+    "href": "https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=10&branchName=master",
+    "uri": "https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline-Tools?branchName=master",
+    "description": "Build Status"
+  }],
   "branding": {
     "color": "#1EA5CE",
     "theme": "dark"
-  }
+  },
+  "files": [{
+    "path": "Comment"
+  }, {
+    "path": "ListApps"
+  }, {
+    "path": "ListFiles"
+  }, {
+    "path": "ListSystemInfo"
+  }, {
+    "path": "ListVariables"
+  }, {
+    "path": "RetainRun"
+  }],
+  "contributions": [{
+    "id": "Comment",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "Comment"
+    }
+  }, {
+    "id": "ListApps",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "ListApps"
+    }
+  }, {
+    "id": "ListFiles",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "ListFiles"
+    }
+  }, {
+    "id": "ListSystemInfo",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "ListSystemInfo"
+    }
+  }, {
+    "id": "ListVariables",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "ListVariables"
+    }
+  }, {
+    "id": "RetainRun",
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": "RetainRun"
+    }
+  }]
 }

@@ -1,14 +1,14 @@
 parameters:
-- {name: name, type: string}
 - {name: displayName, type: string}
 - {name: vmImage, type: string}
 - {name: environment, type: string}
+- {name: download, type: string, default: none}
 - {name: steps, type: stepList}
 - {name: timeoutInMinutes, type: number, default: 10}
 - {name: cancelTimeoutInMinutes, type: number, default: 10}
 
 jobs:
-- deployment: ${{ parameters.name }}
+- deployment:
   displayName: ${{ parameters.displayName }}
 
   pool:
@@ -23,7 +23,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - download: none
+        - download: ${{ parameters.download }}
 
         - template: ../steps/display-info.yml
 

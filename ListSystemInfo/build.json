@@ -1,0 +1,12 @@
+{
+  "common": [{
+    "name": "Tools",
+    "destination": "ps_modules"
+  }],
+  "nuget": [{
+    "name": "VstsTaskSdk",
+    "version": "0.11.0",
+    "source": "https://www.powershellgallery.com/api/v2/",
+    "destination": "ps_modules"
+  }]
+}

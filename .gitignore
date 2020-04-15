@@ -1,4 +1,9 @@
-/Coverage
+/_build/
+/CoverageReport/
 
-/coverage.xml
-/results.xml
+/Coverage-*.xml
+/TestResults-*.xml
+
+packages/
+ps_modules/
+*.vsix

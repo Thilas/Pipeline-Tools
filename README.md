@@ -15,7 +15,7 @@ There are two parameters that can be set with this task:
 * Comments - the text of the comments.
 * Include Comments in Log - If checked, the comments will be included in the log file; Otherwise, you will only see the comments in the pipeline definition.
 
-![Comment task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/Comment.png)
+![Comment task](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/Comment.png?raw=true)
 
 ## List Apps Task
 
@@ -25,7 +25,7 @@ There is one parameter that can be set with this task:
 
 * Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-![List Apps task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListApps.png)
+![List Apps task](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/ListApps.png?raw=true)
 
 ## List Files Task
 
@@ -36,7 +36,7 @@ There are two parameters that can be set with this task:
 * Root Directory - all files and directories beneath the root directory will be listed (recursively).
 * Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-![List Files task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListFiles.png)
+![List Files task](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/ListFiles.png?raw=true)
 
 ## List System Info Task
 
@@ -46,7 +46,7 @@ There is one parameter that can be set with this task:
 
 * Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-![List System Info task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListSystemInfo.png)
+![List System Info task](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/ListSystemInfo.png?raw=true)
 
 ## List Variables Task
 
@@ -56,7 +56,7 @@ There is one parameter that can be set with this task:
 
 * Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-![List Variables task](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/ListVariables.png)
+![List Variables task](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/ListVariables.png?raw=true)
 
 ## Retain Run Task
 
@@ -68,14 +68,15 @@ There are two parameters that can be set with this task:
 
 > **IMPORTANT:** If you are not using a YAML pipeline, before you can make use of the *Retain Run* task, you must first configure your pipeline to allow the use of the OAuth token. To do this, go to the **Options** tab of the pipeline definition and select **Allow Scripts to Access OAuth Token**.
 
-![OAuth token](https://cdn.jsdelivr.net/gh/Thilas/Pipeline-Tools@6ab2fd487d6ae4dc6cb5da3fccefc046fb7818f0/Screenshots/OAuth.png)
+![OAuth token](https://github.com/Thilas/Pipeline-Tools/blob/master/Resources/OAuth.png?raw=true)
 
-## Release History/Road Map
+## Release Notes
 
 | Release | Description                                   |
 | -------:| --------------------------------------------- |
 | 1.x     | VSTS-Tools Build Extensions original releases |
-| 2.0     | Pipeline Tools first release                  |
+| 2.2     | Pipeline Tools first release                  |
+| 2.3     | Minor improvements                            |
 
 ## Feedback, Support and Contribution
 

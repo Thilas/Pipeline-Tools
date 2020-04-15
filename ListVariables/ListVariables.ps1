@@ -10,7 +10,9 @@ try {
     if (!$debugOnly -or ($debugOnly -and $debug)) {
         Import-Module "$PSScriptRoot/ps_modules/Tools" -NoClobber
 
-        Get-ChildItem "Env:/" `
+        Set-HostBufferSize -Width 300
+
+        Get-UnsafeData "Variables" { Get-ChildItem "Env:/" } `
         | Sort-Object "Key" `
         | Format-Table @(
             "Key" | New-Property -Name "Variable"

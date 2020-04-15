@@ -16,7 +16,9 @@ try {
     if (!$debugOnly -or ($debugOnly -and $debug)) {
         Import-Module "$PSScriptRoot/ps_modules/Tools" -NoClobber
 
-        Get-ChildItem $rootDir -Recurse `
+        Set-HostBufferSize -Width 300
+
+        Get-UnsafeData "Files" { Get-ChildItem $rootDir -Recurse } `
         | Sort-Object "FullName" `
         | Format-Table @(
             New-Property {

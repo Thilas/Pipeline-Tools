@@ -7,6 +7,7 @@ function New-Property {
         [object] $Property,
         [string] $Name,
         [string] $Format,
+        [int]    $Width,
         [ValidateSet("Left", "Center", "Right")]
         [string] $Alignment,
         [switch] $Force
@@ -28,6 +29,9 @@ function New-Property {
         }
         if ($Format -and (!$result.FormatString -or $Force)) {
             $result.FormatString = $Format
+        }
+        if ($Width -and (!$result.Width -or $Force)) {
+            $result.Width = $Width
         }
         if ($Alignment -and (!$result.Alignment -or $Force)) {
             $result.Alignment = $Alignment

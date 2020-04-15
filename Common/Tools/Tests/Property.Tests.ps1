@@ -6,9 +6,11 @@ InModuleScope "Tools" {
         $FakeScriptblockProperty = { "Property" }
         $FakeName                = "Name"
         $FakeFormat              = "Format"
+        $FakeWidth               = 1
         $FakeAlignment           = "Left"
         $FakeOtherName           = "Other Name"
         $FakeOtherFormat         = "Other Format"
+        $FakeOtherWidth          = 2
         $FakeOtherAlignment      = "Right"
 
         It "throws an error for an unsupported property" {
@@ -25,12 +27,13 @@ InModuleScope "Tools" {
 
         It "supports full-featured property" {
             # Act
-            $actualValue = $FakeStringProperty | New-Property -Name $FakeName -Format $FakeFormat -Alignment $FakeAlignment
+            $actualValue = $FakeStringProperty | New-Property -Name $FakeName -Format $FakeFormat -Width $FakeWidth -Alignment $FakeAlignment
             # Assert
             $actualValue              | Should -BeOfType [hashtable]
             $actualValue.Expression   | Should -BeExactly $FakeStringProperty
             $actualValue.Name         | Should -BeExactly $FakeName
             $actualValue.FormatString | Should -BeExactly $FakeFormat
+            $actualValue.Width        | Should -BeExactly $FakeWidth
             $actualValue.Alignment    | Should -BeExactly $FakeAlignment
         }
 
@@ -54,27 +57,29 @@ InModuleScope "Tools" {
 
         It "does not override existing attributes" {
             # Arrange
-            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeFormat -Alignment $FakeAlignment
+            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeFormat -Width $FakeWidth -Alignment $FakeAlignment
             # Act
-            $actualValue = $property | New-Property -Name $FakeOtherName -Format $FakeOtherFormat -Alignment $FakeOtherAlignment
+            $actualValue = $property | New-Property -Name $FakeOtherName -Format $FakeOtherFormat -Width $FakeOtherWidth -Alignment $FakeOtherAlignment
             # Assert
             $actualValue              | Should -BeOfType [hashtable]
             $actualValue.Expression   | Should -BeExactly $FakeStringProperty
             $actualValue.Name         | Should -BeExactly $FakeName
             $actualValue.FormatString | Should -BeExactly $FakeFormat
+            $actualValue.Width        | Should -BeExactly $FakeWidth
             $actualValue.Alignment    | Should -BeExactly $FakeAlignment
         }
 
         It "can force overriding existing attributes" {
             # Arrange
-            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeFormat -Alignment $FakeAlignment
+            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeFormat -Width $FakeWidth -Alignment $FakeAlignment
             # Act
-            $actualValue = $property | New-Property -Name $FakeOtherName -Format $FakeOtherFormat -Alignment $FakeOtherAlignment -Force
+            $actualValue = $property | New-Property -Name $FakeOtherName -Format $FakeOtherFormat -Width $FakeOtherWidth -Alignment $FakeOtherAlignment -Force
             # Assert
             $actualValue              | Should -BeOfType [hashtable]
             $actualValue.Expression   | Should -BeExactly $FakeStringProperty
             $actualValue.Name         | Should -BeExactly $FakeOtherName
             $actualValue.FormatString | Should -BeExactly $FakeOtherFormat
+            $actualValue.Width        | Should -BeExactly $FakeOtherWidth
             $actualValue.Alignment    | Should -BeExactly $FakeOtherAlignment
         }
     }

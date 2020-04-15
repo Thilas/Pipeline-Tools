@@ -5,9 +5,6 @@ resources:
     trigger:
       branches:
       - master
-      - refs/pull/*/merge
-
-name: $(resources.pipeline.pipelineTools.runName)
 
 trigger: none
 pr: none
@@ -19,6 +16,9 @@ jobs:
     vmImage: windows-latest
 
     steps:
+    - pwsh: Write-Output "##vso[build.updatebuildnumber]$(resources.pipeline.pipelineTools.runName)"
+      displayName: Update build number
+
     - task: ListSystemInfo@1
       displayName: List system information
       condition: always()

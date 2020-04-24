@@ -20,7 +20,7 @@ try {
         | Format-Table @(
             "Key" | New-Property -Name "Variable"
             "Value"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

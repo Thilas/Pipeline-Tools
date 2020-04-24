@@ -29,7 +29,7 @@ try {
                 "{0}$directorySeparator" -f $_.FullName
             } -Name "Path"
             "Length" | New-Property -Name "Size" | ConvertTo-Unit KB
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

@@ -5,8 +5,12 @@ function Get-UnsafeData {
         [string] $Name,
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [ValidateNotNull()]
-        [scriptblock[]] $Source
+        [scriptblock[]] $Source,
+        [hashtable] $Profiling
     )
+    begin {
+        $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    }
     process {
         $Source | ForEach-Object {
             try {
@@ -14,6 +18,13 @@ function Get-UnsafeData {
             } catch {
                 Write-Verbose "$Name error: $_"
             }
+        }
+    }
+    end {
+        $stopwatch.Stop()
+        "$Name elapsed: {0}" -f $stopwatch.Elapsed | Write-Verbose
+        if ($Profiling) {
+            $Profiling.$Name = $stopwatch.Elapsed
         }
     }
 }

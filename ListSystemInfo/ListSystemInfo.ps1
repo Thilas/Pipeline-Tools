@@ -7,7 +7,7 @@ try {
     $debugOnly = Get-VstsInput -Name "debugOnly" -AsBool
 
     if ($debugOnly) {
-    $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
+        $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
     }
 
     if (!$debugOnly -or ($debugOnly -and $debug)) {
@@ -15,7 +15,10 @@ try {
 
         Set-HostBufferSize -Width 300
 
-        Get-UnsafeData "Computer" { Get-CimInstance "Win32_ComputerSystem" } `
+        $profiling = @{ }
+        $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+
+        Get-UnsafeData "Computer" -Profiling $profiling { Get-CimInstance "Win32_ComputerSystem" } `
         | Format-List @(
             "Model"                     | New-Property -Name "Computer"
             "Manufacturer"
@@ -32,7 +35,7 @@ try {
             "HypervisorPresent"         | New-Property -Name "Hypervisor Present"
         )
 
-        Get-UnsafeData "Processors" { Get-CimInstance "Win32_Processor" } `
+        Get-UnsafeData "Processors" -Profiling $profiling { Get-CimInstance "Win32_Processor" } `
         | Sort-Object "DeviceID" `
         | Format-Table @(
             "DeviceID"                      | New-Property -Name "Id"
@@ -43,7 +46,7 @@ try {
             "VMMonitorModeExtensions"       | New-Property -Name "VM Monitor"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Memory" { Get-CimInstance "Win32_PhysicalMemory" } `
+        Get-UnsafeData "Memory" -Profiling $profiling { Get-CimInstance "Win32_PhysicalMemory" } `
         | Sort-Object "DeviceLocator" `
         | Format-Table @(
             "DeviceLocator"      | New-Property -Name "Id"
@@ -53,7 +56,7 @@ try {
             "InterleavePosition" | New-Property -Name "Position"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Disks" { Get-PhysicalDisk } `
+        Get-UnsafeData "Disks" -Profiling $profiling { Get-PhysicalDisk } `
         | Sort-Object "DeviceId" `
         | Format-Table @(
             "DeviceId"      | New-Property -Name "Id"
@@ -66,7 +69,7 @@ try {
             "HealthStatus"  | New-Property -Name "Status"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Video Controllers" { Get-CimInstance "Win32_VideoController" } `
+        Get-UnsafeData "Video Controllers" -Profiling $profiling { Get-CimInstance "Win32_VideoController" } `
         | Sort-Object "DeviceID" `
         | Format-Table @(
             "DeviceID"            | New-Property -Name "Id"
@@ -77,7 +80,7 @@ try {
             "CurrentRefreshRate"  | New-Property -Name "Refresh Rate"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Monitors" { Get-CimInstance "Win32_DesktopMonitor" } `
+        Get-UnsafeData "Monitors" -Profiling $profiling { Get-CimInstance "Win32_DesktopMonitor" } `
         | Sort-Object "DeviceID" `
         | Format-Table @(
             "DeviceID"    | New-Property -Name "Id"
@@ -88,17 +91,17 @@ try {
             New-Property { "{0} x {1}" -f $_.PixelsPerXLogicalInch, $_.PixelsPerYLogicalInch } -Name "Pixels/Logical Inch" -Alignment Right
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Monitor Sizes" { Get-CimInstance "WmiMonitorBasicDisplayParams" -Namespace "root/wmi" } `
+        Get-UnsafeData "Monitor Sizes" -Profiling $profiling { Get-CimInstance "WmiMonitorBasicDisplayParams" -Namespace "root/wmi" } `
         | Sort-Object "InstanceName" `
         | Format-Table @(
             "InstanceName" | New-Property -Name "Id"
             New-Property { "{0} x {1}" -f $_.MaxHorizontalImageSize, $_.MaxVerticalImageSize } -Name "Monitor Size (cm)" -Alignment Right
         ) -AutoSize -Wrap
 
-        $network = Get-UnsafeData "Network Adapters Configuration" { Get-CimInstance "Win32_NetworkAdapterConfiguration" } `
+        $network = Get-UnsafeData "Network Adapters Configuration" -Profiling $profiling { Get-CimInstance "Win32_NetworkAdapterConfiguration" } `
         | ConvertTo-Hashtable "SettingID"
 
-        Get-UnsafeData "Network Adapters" { Get-CimInstance "Win32_NetworkAdapter" -Filter "PhysicalAdapter=True" } `
+        Get-UnsafeData "Network Adapters" -Profiling $profiling { Get-CimInstance "Win32_NetworkAdapter" -Filter "PhysicalAdapter=True" } `
         | Sort-Object "DeviceID" `
         | Format-Table @(
             "DeviceID" | New-Property -Name "Id"
@@ -111,7 +114,7 @@ try {
             New-Property { $network[$_.GUID].IPSubnet -join "`n" } -Name "IP Subnets"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Operating System" { Get-CimInstance "Win32_OperatingSystem" } `
+        Get-UnsafeData "Operating System" -Profiling $profiling { Get-CimInstance "Win32_OperatingSystem" } `
         | Format-List @(
             "Caption"                | New-Property -Name "Operating System"
             "Version"
@@ -132,7 +135,7 @@ try {
             "FreeSpaceInPagingFiles" | New-Property -Name "Free in Paging Files" | ConvertTo-Unit GB -From KB
         )
 
-        Get-UnsafeData "Hot Fixes" { Get-CimInstance "Win32_QuickFixEngineering" } `
+        Get-UnsafeData "Hot Fixes" -Profiling $profiling { Get-CimInstance "Win32_QuickFixEngineering" } `
         | Sort-Object "InstalledOn" -Descending `
         | Format-Table @(
             "HotFixID"    | New-Property -Name "Hot Fix"
@@ -140,7 +143,7 @@ try {
             "InstalledOn" | New-Property -Name "Install Date"
         ) -AutoSize -Wrap
 
-        Get-UnsafeData "Time Zone" { Get-CimInstance "Win32_TimeZone" } `
+        Get-UnsafeData "Time Zone" -Profiling $profiling { Get-CimInstance "Win32_TimeZone" } `
         | Format-List @(
             "Caption"      | New-Property -Name "Time Zone"
             "Bias"
@@ -148,7 +151,7 @@ try {
             "DaylightBias" | New-Property -Name "Daylight Bias"
         )
 
-        Get-UnsafeData "Volumes" { Get-CimInstance "Win32_LogicalDisk" } `
+        Get-UnsafeData "Volumes" -Profiling $profiling { Get-CimInstance "Win32_LogicalDisk" } `
         | Sort-Object "Name" `
         | Format-Table @(
             "Name"
@@ -158,6 +161,18 @@ try {
             "Size" | ConvertTo-Unit GB
             "FreeSpace"  | New-Property -Name "Free" | ConvertTo-Unit GB
         ) -AutoSize -Wrap
+
+        $stopwatch.Stop()
+        "Total elapsed: {0}" -f $stopwatch.Elapsed | Write-Verbose
+        $profiling.GetEnumerator() `
+        | Sort-Object "Value" -Descending `
+        | Format-Table @(
+            "Key"   | New-Property -Name "Profiling"
+            New-Property { $_.Value / $stopwatch.Elapsed } -Name "%" -Format "P0"
+            "Value" | New-Property -Name "Elapsed"
+        ) -AutoSize -Wrap `
+        | Out-String -Stream `
+        | Write-Verbose
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

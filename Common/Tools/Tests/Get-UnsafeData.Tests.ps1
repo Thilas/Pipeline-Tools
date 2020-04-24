@@ -41,5 +41,14 @@ InModuleScope "Tools" {
             $actualValue | Should -HaveCount 2
             $actualValue | Should -BeExactly $FakeItem1, $FakeItem2
         }
+
+        It "adds profiling data" {
+            # Act
+            $FakeProfiling = @{ }
+            Get-UnsafeData $FakeName -Profiling $FakeProfiling { $FakeItem1 }
+            # Assert
+            $FakeProfiling.Keys | Should -Contain $FakeName
+            $FakeProfiling.$FakeName | Should -BeOfType [timespan]
+        }
     }
 }

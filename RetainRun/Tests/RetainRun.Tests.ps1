@@ -15,7 +15,7 @@ Describe "Retain Run" {
         Assert-MockCalled "Invoke-RestMethod" -Scope It
     }
 
-    It "does nothing when debugOnly is true and System.Debug is false" {
+    It "does nothing when debugOnly is true and system.debug is false" {
         # Arrange
         Mock "Get-VstsInput" -ParameterFilter { $Name -eq "debugOnly" -and $AsBool } { $true } -Verifiable
         # Act
@@ -25,9 +25,9 @@ Describe "Retain Run" {
         Assert-MockCalled "Invoke-RestMethod" -Times 0 -Scope It
     }
 
-    It "retains the run when debugOnly is true and System.Debug is true" {
+    It "retains the run when debugOnly is true and system.debug is true" {
         # Arrange
-        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "System.Debug" -and $AsBool } { $true } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.debug" -and $AsBool } { $true } -Verifiable
         Mock "Invoke-RestMethod" -ParameterFilter { $Method -eq "Get" } { @{ count = 0 } } -Verifiable
         Mock "Invoke-RestMethod" -ParameterFilter { $Method -eq "Post" } -Verifiable
         # Act

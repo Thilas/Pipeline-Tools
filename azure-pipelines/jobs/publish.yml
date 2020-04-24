@@ -13,7 +13,7 @@ jobs:
     - template: ../steps/download-artifact.yml
       parameters:
         artifact: ${{ parameters.artifact }}
-        path: $(Build.StagingDirectory)/${{ parameters.artifact }}
+        path: $(build.stagingDirectory)/${{ parameters.artifact }}
 
     - template: ../steps/use-tfx-cli.yml
 
@@ -23,4 +23,4 @@ jobs:
         connectTo: VsTeam
         connectedServiceName: ${{ parameters.connectedServiceName }}
         fileType: vsix
-        vsixFile: $(Build.StagingDirectory)/${{ parameters.artifact }}/*.vsix
+        vsixFile: $(build.stagingDirectory)/${{ parameters.artifact }}/*.vsix

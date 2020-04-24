@@ -14,13 +14,13 @@ jobs:
     - template: ../steps/download-artifact.yml
       parameters:
         artifact: ${{ parameters.artifact }}
-        path: $(Build.StagingDirectory)/${{ parameters.artifact }}
+        path: $(build.stagingDirectory)/${{ parameters.artifact }}
 
     - task: GitHubRelease@0
       displayName: Release extension
       inputs:
         gitHubConnection: ${{ parameters.gitHubConnection }}
         tagSource: manual
-        tag: v$(Build.BuildNumber)
-        title: ${{ parameters.extensionName }} v$(Build.BuildNumber)
-        assets: $(Build.StagingDirectory)/${{ parameters.artifact }}/*
+        tag: v$(build.buildNumber)
+        title: ${{ parameters.extensionName }} v$(build.buildNumber)
+        assets: $(build.stagingDirectory)/${{ parameters.artifact }}/*

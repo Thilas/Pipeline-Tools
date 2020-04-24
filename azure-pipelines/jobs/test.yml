@@ -32,7 +32,7 @@ jobs:
         reports: Coverage-${{ parameters.displayName }}Tests.xml
         targetdir: CoverageReport
         reporttypes: HtmlInline_AzurePipelines_Dark;Badges
-        sourcedirs: $(Pipeline.Workspace)
+        sourcedirs: $(pipeline.workspace)
         tag: ''
 
     - ${{ if parameters.publishCodeCoverage }}:
@@ -40,8 +40,8 @@ jobs:
         displayName: Publish code coverage
         inputs:
           codeCoverageTool: JaCoCo
-          summaryFileLocation: $(System.DefaultWorkingDirectory)/Coverage-${{ parameters.displayName }}Tests.xml
-          reportDirectory: $(System.DefaultWorkingDirectory)/CoverageReport
+          summaryFileLocation: $(system.defaultWorkingDirectory)/Coverage-${{ parameters.displayName }}Tests.xml
+          reportDirectory: $(system.defaultWorkingDirectory)/CoverageReport
 
     - publish: CoverageReport
       displayName: Publish code coverage report artifact

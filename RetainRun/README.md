@@ -17,6 +17,6 @@ This task applies to pipelines only.
 
 | Argument | Description |
 | -------- | ----------- |
-| Execute on Debug Only | If checked, executes only when `System.Debug` is set to `true`. |
+| Execute on Debug Only | If checked, executes only when `system.debug` is set to `true`. |
 
 [Control options](https://docs.microsoft.com/en-us/vsts/pipelines/process/tasks?view=vsts#controloptions)

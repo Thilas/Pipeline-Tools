@@ -31,7 +31,7 @@ Describe "Integration-Tests" {
         Invoke-VstsTaskScript -ScriptBlock { . "$PSScriptRoot\..\ListApps\ListApps.ps1" }
     }
 
-    It "lists files in System.DefaultWorkingDirectory when rootDir is null and debugOnly is false" {
+    It "lists files in system.defaultWorkingDirectory when rootDir is null and debugOnly is false" {
         # Arrange
         New-Item "$TestDrive/File.ext" -ItemType File | Out-Null
         New-Item "$TestDrive/Directory" -ItemType Directory | Out-Null

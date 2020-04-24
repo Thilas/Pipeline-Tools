@@ -26,7 +26,7 @@
     "label": "Execute on Debug Only",
     "defaultValue": false,
     "required": false,
-    "helpMarkDown": "If checked, executes only when `System.Debug` is set to `true`."
+    "helpMarkDown": "If checked, executes only when `system.debug` is set to `true`."
   }],
   "execution": {
     "PowerShell3": {

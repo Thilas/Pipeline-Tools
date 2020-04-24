@@ -14,5 +14,5 @@ pr:
 stages:
 - template: stages/all.yml
   parameters:
-    master: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/master') }}
+    master: ${{ eq(variables['build.sourceBranch'], 'refs/heads/master') }}
     automaticVersion: ${{ eq(parameters.version, 'Automatic') }}

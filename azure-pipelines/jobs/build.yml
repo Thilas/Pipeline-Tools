@@ -37,11 +37,11 @@ jobs:
         publisherId: ${{ parameters.publisherId }}
         extensionId: ${{ parameters.extensionId }}
         extensionName: ${{ parameters.extensionName }}
-        extensionVersion: $(Build.BuildNumber)
+        extensionVersion: $(build.buildNumber)
         updateTasksVersion: true
         updateTasksVersionType: minor
         updateTasksId: true
 
-    - publish: $(${{ parameters.artifact }}.Extension.OutputPath)
+    - publish: $(${{ parameters.artifact }}.extension.outputPath)
       displayName: Publish ${{ parameters.artifact }} artifact
       artifact: ${{ parameters.artifact }}

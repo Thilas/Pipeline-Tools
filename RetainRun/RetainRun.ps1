@@ -6,13 +6,13 @@ Trace-VstsEnteringInvocation $MyInvocation
 try {
     $debugOnly = Get-VstsInput -Name "debugOnly" -AsBool
 
-    $debug = Get-VstsTaskVariable -Name "System.Debug" -AsBool
+    $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
     if (!$debugOnly -or ($debugOnly -and $debug)) {
-        $collectionUri = Get-VstsTaskVariable -Name "System.TeamFoundationCollectionUri" -Require
-        $project       = Get-VstsTaskVariable -Name "System.TeamProject" -Require
-        $accessToken   = Get-VstsTaskVariable -Name "System.AccessToken" -Require
-        $definitionId  = Get-VstsTaskVariable -Name "System.DefinitionId" -Require
-        $buildId       = Get-VstsTaskVariable -Name "Build.BuildId" -Require
+        $collectionUri = Get-VstsTaskVariable -Name "system.teamFoundationCollectionUri" -Require
+        $project       = Get-VstsTaskVariable -Name "system.teamProject" -Require
+        $accessToken   = Get-VstsTaskVariable -Name "system.accessToken" -Require
+        $definitionId  = Get-VstsTaskVariable -Name "system.definitionId" -Require
+        $buildId       = Get-VstsTaskVariable -Name "build.buildId" -Require
 
         $uri = "$collectionUri$project/_apis/build/retention/leases?api-version=6.0-preview.1"
         Write-Verbose "Azure DevOps uri: $uri"

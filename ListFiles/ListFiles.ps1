@@ -8,11 +8,11 @@ try {
     $debugOnly = Get-VstsInput -Name "debugOnly" -AsBool
 
     if (!$rootDir) {
-        $rootDir = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory" -Require
+        $rootDir = Get-VstsTaskVariable -Name "system.defaultWorkingDirectory" -Require
         Write-Verbose "Using default root directory: $rootDir"
     }
 
-    $debug = Get-VstsTaskVariable -Name "System.Debug" -AsBool
+    $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
     if (!$debugOnly -or ($debugOnly -and $debug)) {
         Import-Module "$PSScriptRoot/ps_modules/Tools" -NoClobber
 

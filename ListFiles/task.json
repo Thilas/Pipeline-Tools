@@ -25,7 +25,7 @@
     "name": "rootDir",
     "type": "filePath",
     "label": "Root Directory",
-    "defaultValue": "$(System.DefaultWorkingDirectory)",
+    "defaultValue": "$(system.defaultWorkingDirectory)",
     "required": false,
     "helpMarkDown": "The root directory to list files and directories under when this task is ran."
   }, {
@@ -34,7 +34,7 @@
     "label": "Execute on Debug Only",
     "defaultValue": false,
     "required": false,
-    "helpMarkDown": "If checked, executes only when `System.Debug` is set to `true`."
+    "helpMarkDown": "If checked, executes only when `system.debug` is set to `true`."
   }],
   "execution": {
     "PowerShell3": {

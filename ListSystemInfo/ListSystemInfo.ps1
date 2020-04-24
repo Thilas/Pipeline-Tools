@@ -30,7 +30,7 @@ try {
             "TotalPhysicalMemory"       | New-Property -Name "Physical Memory" | ConvertTo-Unit GB
             "DaylightInEffect"          | New-Property -Name "Daylight in Effect"
             "HypervisorPresent"         | New-Property -Name "Hypervisor Present"
-        ) | Write-Output
+        )
 
         Get-UnsafeData "Processors" { Get-CimInstance "Win32_Processor" } `
         | Sort-Object "DeviceID" `
@@ -41,7 +41,7 @@ try {
             "NumberOfLogicalProcessors"     | New-Property -Name "Threads"
             "VirtualizationFirmwareEnabled" | New-Property -Name "Virtualization"
             "VMMonitorModeExtensions"       | New-Property -Name "VM Monitor"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Memory" { Get-CimInstance "Win32_PhysicalMemory" } `
         | Sort-Object "DeviceLocator" `
@@ -51,7 +51,7 @@ try {
             "Capacity"           | ConvertTo-Unit GB
             "Speed"
             "InterleavePosition" | New-Property -Name "Position"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Disks" { Get-PhysicalDisk } `
         | Sort-Object "DeviceId" `
@@ -64,7 +64,7 @@ try {
             "Size" | ConvertTo-Unit GB
             "AllocatedSize" | New-Property -Name "Allocated" | ConvertTo-Unit GB
             "HealthStatus"  | New-Property -Name "Status"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Video Controllers" { Get-CimInstance "Win32_VideoController" } `
         | Sort-Object "DeviceID" `
@@ -75,7 +75,7 @@ try {
             New-Property { "{0} x {1}" -f $_.CurrentHorizontalResolution, $_.CurrentVerticalResolution } -Name "Resolution" -Alignment Right
             "CurrentBitsPerPixel" | New-Property -Name "Color Depth"
             "CurrentRefreshRate"  | New-Property -Name "Refresh Rate"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Monitors" { Get-CimInstance "Win32_DesktopMonitor" } `
         | Sort-Object "DeviceID" `
@@ -86,14 +86,14 @@ try {
             New-Property { "{0} x {1}" -f $_.ScreenWidth, $_.ScreenHeight } -Name "Resolution" -Alignment Right
             "Bandwidth"
             New-Property { "{0} x {1}" -f $_.PixelsPerXLogicalInch, $_.PixelsPerYLogicalInch } -Name "Pixels/Logical Inch" -Alignment Right
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Monitor Sizes" { Get-CimInstance "WmiMonitorBasicDisplayParams" -Namespace "root/wmi" } `
         | Sort-Object "InstanceName" `
         | Format-Table @(
             "InstanceName" | New-Property -Name "Id"
             New-Property { "{0} x {1}" -f $_.MaxHorizontalImageSize, $_.MaxVerticalImageSize } -Name "Monitor Size (cm)" -Alignment Right
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         $network = Get-UnsafeData "Network Adapters Configuration" { Get-CimInstance "Win32_NetworkAdapterConfiguration" } `
         | ConvertTo-Hashtable "SettingID"
@@ -109,7 +109,7 @@ try {
             New-Property { $network[$_.GUID].DefaultIPGateway -join "`n" } -Name "Default Gateway"
             New-Property { $network[$_.GUID].IPAddress -join "`n" } -Name "IP Addresses"
             New-Property { $network[$_.GUID].IPSubnet -join "`n" } -Name "IP Subnets"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Operating System" { Get-CimInstance "Win32_OperatingSystem" } `
         | Format-List @(
@@ -130,7 +130,7 @@ try {
             "FreeVirtualMemory"      | New-Property -Name "Free Virtual Memory" | ConvertTo-Unit GB -From KB
             New-Property { $_.SizeStoredInPagingFiles + $_.FreeSpaceInPagingFiles } -Name "Total in Paging Files" | ConvertTo-Unit GB -From KB
             "FreeSpaceInPagingFiles" | New-Property -Name "Free in Paging Files" | ConvertTo-Unit GB -From KB
-        ) | Write-Output
+        )
 
         Get-UnsafeData "Hot Fixes" { Get-CimInstance "Win32_QuickFixEngineering" } `
         | Sort-Object "InstalledOn" -Descending `
@@ -138,7 +138,7 @@ try {
             "HotFixID"    | New-Property -Name "Hot Fix"
             "Description" | New-Property -Name "Type"
             "InstalledOn" | New-Property -Name "Install Date"
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
 
         Get-UnsafeData "Time Zone" { Get-CimInstance "Win32_TimeZone" } `
         | Format-List @(
@@ -146,7 +146,7 @@ try {
             "Bias"
             "StandardBias" | New-Property -Name "Standard Bias"
             "DaylightBias" | New-Property -Name "Daylight Bias"
-        ) | Write-Output
+        )
 
         Get-UnsafeData "Volumes" { Get-CimInstance "Win32_LogicalDisk" } `
         | Sort-Object "Name" `
@@ -157,7 +157,7 @@ try {
             "Compressed"
             "Size" | ConvertTo-Unit GB
             "FreeSpace"  | New-Property -Name "Free" | ConvertTo-Unit GB
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

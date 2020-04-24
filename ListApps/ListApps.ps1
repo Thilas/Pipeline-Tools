@@ -30,7 +30,7 @@ try {
             "DisplayName"    | New-Property -Name "Application"
             "DisplayVersion" | New-Property -Name "Version"
             "EstimatedSize"  | New-Property -Name "Size" | ConvertTo-Unit MB -From KB
-        ) -AutoSize -Wrap | Write-Output
+        ) -AutoSize -Wrap
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

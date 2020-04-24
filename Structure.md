@@ -34,7 +34,7 @@ All Powershell tests relies on [Pester](https://github.com/pester/Pester). Read 
 ``` powershell
 . "$PSScriptRoot/../../Tests/Initialize-Tests.ps1" $MyInvocation
 
-Describe "FileUnderTest" {
+Describe "System Under Test" {
     It "succeeds when doing something" {
         # Arrange
         Mock "Some-Function" -ParameterFilter { $Arg -eq $SomeValue } { $ExpectedValue } -Verifiable

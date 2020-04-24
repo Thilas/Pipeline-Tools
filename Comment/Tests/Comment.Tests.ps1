@@ -6,15 +6,18 @@ Describe "Comment" {
     Mock "Write-Output" -ParameterFilter { $InputObject -eq $FakeComments }
 
     It "does nothing when includeCommentsInLog is false" {
+        # Arrange
+        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "comments" } { $FakeComments } -Verifiable
+        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "includeCommentsInLog" -and $AsBool } { $false } -Verifiable
         # Act
         & $sut
         # Assert
+        Assert-VerifiableMock
         Assert-MockCalled "Write-Output" -Times 0 -Scope It
     }
 
     It "writes comments when includeCommentsInLog is true" {
         # Arrange
-        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "comments" } { $FakeComments } -Verifiable
         Mock "Get-VstsInput" -ParameterFilter { $Name -eq "includeCommentsInLog" -and $AsBool } { $true } -Verifiable
         # Act
         & $sut

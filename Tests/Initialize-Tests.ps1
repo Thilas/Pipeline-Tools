@@ -20,7 +20,7 @@ $vstsTaskSdkModule = "VstsTaskSdk"
 $vstsTaskSdkPath = "$PSScriptRoot/ps_modules/$vstsTaskSdkModule"
 if (Test-Path $vstsTaskSdkPath) {
     $Env:SYSTEM_CULTURE = "en_US" # Required in order to import the module successfully
-    Use-Module -Name $vstsTaskSdkModule -Path $vstsTaskSdkPath -ArgumentList @{ NonInteractive = $true }
+    Use-Module -Name $vstsTaskSdkModule -Path $vstsTaskSdkPath
 } else {
     throw "Unable to import VstsTaskSdk. Please build the project first."
 }

@@ -6,7 +6,10 @@ Trace-VstsEnteringInvocation $MyInvocation
 try {
     $debugOnly = Get-VstsInput -Name "debugOnly" -AsBool
 
-    $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
+    if ($debugOnly) {
+        $debug = Get-VstsTaskVariable -Name "system.debug" -AsBool
+    }
+
     if (!$debugOnly -or ($debugOnly -and $debug)) {
         $collectionUri = Get-VstsTaskVariable -Name "system.teamFoundationCollectionUri" -Require
         $project       = Get-VstsTaskVariable -Name "system.teamProject" -Require

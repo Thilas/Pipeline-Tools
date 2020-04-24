@@ -15,7 +15,17 @@
         {
             "type": "PowerShell",
             "request": "launch",
-            "name": "PowerShell Launch Current File",
+            "name": "Pester Coverage",
+            "script": "${workspaceFolder}/test.ps1",
+            "args": [
+                "-CodeCoverage"
+            ],
+            "cwd": "${file}"
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "Run File",
             "script": "${file}",
             "args": [],
             "cwd": "${file}"
@@ -23,20 +33,10 @@
         {
             "type": "PowerShell",
             "request": "launch",
-            "name": "PowerShell Launch Current File w/Args Prompt",
-            "script": "${file}",
+            "name": "Run Task",
+            "script": "${workspaceFolder}/.vscode/debug.ps1",
             "args": [
-                "${command:SpecifyScriptArgs}"
-            ],
-            "cwd": "${file}"
-        },
-        {
-            "type": "PowerShell",
-            "request": "launch",
-            "name": "PowerShell Pester Tests Coverage",
-            "script": "${workspaceFolder}/test.ps1",
-            "args": [
-                "-CodeCoverage"
+              "${file}"
             ],
             "cwd": "${file}"
         }

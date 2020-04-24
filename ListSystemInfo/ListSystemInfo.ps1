@@ -142,7 +142,7 @@ try {
         | Format-Table @(
             "HotFixID"    | New-Property -Name "Hot Fix"
             "Description" | New-Property -Name "Type"
-            "InstalledOn" | New-Property -Name "Install Date"
+            # "InstalledOn" | New-Property -Name "Install Date" # Fails if date is null
         ) -AutoSize -Wrap
 
         Get-UnsafeData "Time Zone" -Profiling $profiling { Get-CimInstance "Win32_TimeZone" -CimSession $session } `

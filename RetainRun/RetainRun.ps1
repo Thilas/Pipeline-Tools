@@ -2,6 +2,8 @@
 [OutputType([void])]
 param()
 
+# https://docs.microsoft.com/en-us/rest/api/azure/devops/build/leases?view=azure-devops-rest-6.0
+
 Trace-VstsEnteringInvocation $MyInvocation
 try {
     $debugOnly = Get-VstsInput -Name "debugOnly" -AsBool

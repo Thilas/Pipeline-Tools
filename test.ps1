@@ -52,7 +52,7 @@ if ($Tag) {
 
 if ($CodeCoverage) {
     $excludedFiles  = Get-Item "$PSScriptRoot/build.ps1", "$PSScriptRoot/test.ps1"
-    $excludedDirectories  = Get-Item "$PSScriptRoot/_build", "$PSScriptRoot/Tests"
+    $excludedDirectories  = Get-Item "$PSScriptRoot/_build", "$PSScriptRoot/.vscode", "$PSScriptRoot/Tests"
     $excludedDirectories += Get-ChildItem "$PSScriptRoot/*/packages", "$PSScriptRoot/*/ps_modules" -Directory
     $excludedDirectories += Join-Path $excludedDirectories "*"
 

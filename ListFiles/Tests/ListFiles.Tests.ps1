@@ -1,11 +1,14 @@
 ﻿$sut = . "$PSScriptRoot/../../Tests/Initialize-Tests.ps1" $MyInvocation -PassThru
 
-Describe "List Files" {
+Describe "List Files Task" {
     # Arrange
     $FakeRoot = "$PSScriptRoot/.."
     Mock "Get-ChildItem" { @([pscustomobject] @{ FullName = 1; PsIsContainer = $true }) }
 
     It "lists files in system.defaultWorkingDirectory when rootDir is null and debugOnly is false" {
+        # Arrange
+        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "rootDir" } -Verifiable
+        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "debugOnly" -and $AsBool } { $false } -Verifiable
         Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.defaultWorkingDirectory" -and $Require } { $FakeRoot } -Verifiable
         # Act
         & $sut
@@ -17,6 +20,7 @@ Describe "List Files" {
     It "lists nothing when debugOnly is true and system.debug is false" {
         # Arrange
         Mock "Get-VstsInput" -ParameterFilter { $Name -eq "debugOnly" -and $AsBool } { $true } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.debug" -and $AsBool } { $false } -Verifiable
         # Act
         & $sut
         # Assert

@@ -1,12 +1,17 @@
 ﻿$sut = . "$PSScriptRoot/../../Tests/Initialize-Tests.ps1" $MyInvocation -PassThru
 
-Describe "Retain Run" {
+Describe "Retain Run Task" {
     # Arrange
-    Mock "Get-VstsTaskVariable"
     Mock "Invoke-RestMethod" -ParameterFilter { $Method -eq "Get" } { @{ count = 1 } }
 
     It "retains the run when debugOnly is false" {
         # Arrange
+        Mock "Get-VstsInput" -ParameterFilter { $Name -eq "debugOnly" -and $AsBool } { $false } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.teamFoundationCollectionUri" -and $Require } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.teamProject" -and $Require } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.accessToken" -and $Require } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.definitionId" -and $Require } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "build.buildId" -and $Require } -Verifiable
         Mock "Write-Warning" -Verifiable
         # Act
         & $sut
@@ -18,6 +23,7 @@ Describe "Retain Run" {
     It "does nothing when debugOnly is true and system.debug is false" {
         # Arrange
         Mock "Get-VstsInput" -ParameterFilter { $Name -eq "debugOnly" -and $AsBool } { $true } -Verifiable
+        Mock "Get-VstsTaskVariable" -ParameterFilter { $Name -eq "system.debug" -and $AsBool } { $false } -Verifiable
         # Act
         & $sut
         # Assert

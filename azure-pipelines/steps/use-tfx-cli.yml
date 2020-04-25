@@ -1,6 +1,6 @@
 steps:
-- task: TfxInstaller@2
-  displayName: Use Node CLI for Azure DevOps
-  inputs:
-    version: v0.7.x
-    checkLatest: true
+  - task: TfxInstaller@2
+    displayName: Use Node CLI for Azure DevOps
+    inputs:
+      version: v0.7.x
+      checkLatest: true

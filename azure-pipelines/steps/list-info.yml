@@ -1,0 +1,3 @@
+steps:
+  - bash: env
+    displayName: List environment variables

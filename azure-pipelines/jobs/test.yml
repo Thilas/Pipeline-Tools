@@ -1,48 +1,49 @@
 parameters:
-- {name: displayName, type: string}
-- {name: publishCodeCoverage, type: boolean, default: false}
+  - { name: test, type: string, values: [Unit, Integration] }
+  - { name: publishCodeCoverage, type: boolean, default: false }
 
 jobs:
-- template: job-base.yml
-  parameters:
-    displayName: Test
-    vmImage: windows-latest
+  - template: job-base.yml
+    parameters:
+      displayName: ${{ parameters.test }} Tests
+      vmImage: windows-latest
+      checkout: self
 
-    steps:
-    - pwsh: ./build.ps1 -Build
-      displayName: Build tasks
+      steps:
+        - pwsh: ./build.ps1 -Build
+          displayName: Build tasks
 
-    - powershell: ./build.ps1 -${{ parameters.displayName }}Tests
-      displayName: Run tests (PowerShell)
+        - powershell: ./build.ps1 -${{ parameters.test }}Tests
+          displayName: Run tests (PowerShell)
 
-    - pwsh: ./build.ps1 -${{ parameters.displayName }}Tests -CodeCoverage
-      displayName: Run tests (PowerShell Core)
+        - pwsh: ./build.ps1 -${{ parameters.test }}Tests -CodeCoverage
+          displayName: Run tests (PowerShell Core)
 
-    - task: PublishTestResults@2
-      displayName: Publish test results
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFormat: NUnit
-        testResultsFiles: TestResults-${{ parameters.displayName }}Tests.xml
-        testRunTitle: ${{ parameters.displayName }} Tests
+        - task: PublishTestResults@2
+          displayName: Publish test results
+          condition: succeededOrFailed()
+          inputs:
+            testResultsFormat: NUnit
+            testResultsFiles: TestResults-${{ parameters.test }}Tests.xml
+            testRunTitle: ${{ parameters.test }} Tests
 
-    - task: reportgenerator@4
-      displayName: Generate code coverage report
-      inputs:
-        reports: Coverage-${{ parameters.displayName }}Tests.xml
-        targetdir: CoverageReport
-        reporttypes: HtmlInline_AzurePipelines_Dark;Badges
-        sourcedirs: $(pipeline.workspace)
-        tag: ''
+        - task: reportgenerator@4
+          displayName: Generate code coverage report
+          inputs:
+            reports: Coverage-${{ parameters.test }}Tests.xml
+            targetdir: CoverageReport
+            reporttypes: HtmlInline_AzurePipelines_Dark;Badges
+            sourcedirs: $(pipeline.workspace)
+            tag: ''
 
-    - ${{ if parameters.publishCodeCoverage }}:
-      - task: PublishCodeCoverageResults@1
-        displayName: Publish code coverage
-        inputs:
-          codeCoverageTool: JaCoCo
-          summaryFileLocation: $(system.defaultWorkingDirectory)/Coverage-${{ parameters.displayName }}Tests.xml
-          reportDirectory: $(system.defaultWorkingDirectory)/CoverageReport
+        - ${{ if parameters.publishCodeCoverage }}:
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish code coverage
+            inputs:
+              codeCoverageTool: JaCoCo
+              summaryFileLocation: $(system.defaultWorkingDirectory)/Coverage-${{ parameters.test }}Tests.xml
+              reportDirectory: $(system.defaultWorkingDirectory)/CoverageReport
 
-    - publish: CoverageReport
-      displayName: Publish code coverage report artifact
-      artifact: ${{ parameters.displayName }} Tests
+        - publish: CoverageReport
+          displayName: Publish ${{ parameters.test }} Tests artifact
+          artifact: ${{ parameters.test }} Tests

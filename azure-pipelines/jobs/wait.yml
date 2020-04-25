@@ -1,0 +1,14 @@
+jobs:
+  - template: job-base.yml
+    parameters:
+      displayName: Wait
+      vmImage: windows-latest
+
+      variables:
+        - template: ../variables/extension.yml
+
+      steps:
+        - bash: echo '##vso[build.updatebuildnumber]$(resources.pipeline.pipelineTools.runName)'
+          displayName: Update build number
+
+        - template: ../steps/wait-extension.yml

@@ -1,0 +1,12 @@
+variables:
+  - name: extension.publisherId
+    value: thomas-demoulins
+    readonly: true
+
+  - name: extension.id
+    value: pipeline-tools
+    readonly: true
+
+  - name: extension.name
+    value: Pipeline Tools
+    readonly: true

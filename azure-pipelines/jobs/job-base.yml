@@ -1,24 +1,27 @@
 parameters:
-- {name: displayName, type: string}
-- {name: vmImage, type: string}
-- {name: checkout, type: string, default: self}
-- {name: steps, type: stepList}
-- {name: timeoutInMinutes, type: number, default: 20}
-- {name: cancelTimeoutInMinutes, type: number, default: 5}
+  - { name: displayName, type: string }
+  - { name: vmImage, type: string }
+  - { name: timeoutInMinutes, type: number, default: 20 }
+  - { name: cancelTimeoutInMinutes, type: number, default: 5 }
+  - { name: variables, type: object, default: [] }
+  - { name: checkout, type: string, default: none }
+  - { name: steps, type: stepList }
 
 jobs:
-- job:
-  displayName: ${{ parameters.displayName }}
+  - job:
+    displayName: ${{ parameters.displayName }}
 
-  pool:
-    vmImage: ${{ parameters.vmImage }}
+    pool:
+      vmImage: ${{ parameters.vmImage }}
 
-  timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
-  cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
+    timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
+    cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
 
-  steps:
-  - checkout: ${{ parameters.checkout }}
+    variables: ${{ parameters.variables }}
 
-  - template: ../steps/display-info.yml
+    steps:
+      - checkout: ${{ parameters.checkout }}
 
-  - ${{ parameters.steps }}
+      - template: ../steps/list-info.yml
+
+      - ${{ parameters.steps }}

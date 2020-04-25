@@ -1,26 +1,28 @@
 parameters:
-- {name: gitHubConnection, type: string}
-- {name: artifact, type: string}
-- {name: extensionName, type: string}
+  - { name: gitHubConnection, type: string }
 
 jobs:
-- template: deployment-base.yml
-  parameters:
-    displayName: Release
-    vmImage: ubuntu-latest
-    environment: ${{ parameters.gitHubConnection }}
+  - template: deployment-base.yml
+    parameters:
+      name: Release
+      displayName: Release
+      vmImage: ubuntu-latest
+      environment: ${{ parameters.gitHubConnection }}
 
-    steps:
-    - template: ../steps/download-artifact.yml
-      parameters:
-        artifact: ${{ parameters.artifact }}
-        path: $(build.stagingDirectory)/${{ parameters.artifact }}
+      variables:
+        - template: ../variables/extension.yml
 
-    - task: GitHubRelease@0
-      displayName: Release extension
-      inputs:
-        gitHubConnection: ${{ parameters.gitHubConnection }}
-        tagSource: manual
-        tag: v$(build.buildNumber)
-        title: ${{ parameters.extensionName }} v$(build.buildNumber)
-        assets: $(build.stagingDirectory)/${{ parameters.artifact }}/*
+      steps:
+        - template: ../steps/download-artifact.yml
+          parameters:
+            artifact: VSIX
+            path: $(build.stagingDirectory)/VSIX
+
+        - task: GitHubRelease@0
+          displayName: Release extension
+          inputs:
+            gitHubConnection: ${{ parameters.gitHubConnection }}
+            tagSource: manual
+            tag: v$(build.buildNumber)
+            title: $(extension.name) v$(build.buildNumber)
+            assets: $(build.stagingDirectory)/VSIX/*

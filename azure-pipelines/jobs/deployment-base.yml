@@ -1,30 +1,35 @@
 parameters:
-- {name: displayName, type: string}
-- {name: vmImage, type: string}
-- {name: environment, type: string}
-- {name: download, type: string, default: none}
-- {name: steps, type: stepList}
-- {name: timeoutInMinutes, type: number, default: 20}
-- {name: cancelTimeoutInMinutes, type: number, default: 5}
+  - { name: name, type: string }
+  - { name: displayName, type: string }
+  - { name: dependsOn, type: object, default: [] }
+  - { name: vmImage, type: string }
+  - { name: timeoutInMinutes, type: number, default: 20 }
+  - { name: cancelTimeoutInMinutes, type: number, default: 5 }
+  - { name: variables, type: object, default: [] }
+  - { name: environment, type: string }
+  - { name: download, type: string, default: none }
+  - { name: steps, type: stepList }
 
 jobs:
-- deployment:
-  displayName: ${{ parameters.displayName }}
+  - deployment: ${{ parameters.name }}
+    displayName: ${{ parameters.displayName }}
 
-  pool:
-    vmImage: ${{ parameters.vmImage }}
+    pool:
+      vmImage: ${{ parameters.vmImage }}
 
-  timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
-  cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
+    timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
+    cancelTimeoutInMinutes: ${{ parameters.cancelTimeoutInMinutes }}
 
-  environment: ${{ parameters.environment }}
+    variables: ${{ parameters.variables }}
 
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - download: ${{ parameters.download }}
+    environment: ${{ parameters.environment }}
 
-        - template: ../steps/display-info.yml
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: ${{ parameters.download }}
 
-        - ${{ parameters.steps }}
+            - template: ../steps/list-info.yml
+
+            - ${{ parameters.steps }}

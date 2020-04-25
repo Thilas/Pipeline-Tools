@@ -1,47 +1,47 @@
 parameters:
-- {name: automaticVersion, type: boolean}
-- {name: connectedServiceName, type: string}
-- {name: publisherId, type: string}
-- {name: extensionId, type: string}
-- {name: extensionName, type: string}
-- {name: artifact, type: string}
+  - { name: automaticVersion, type: boolean }
+  - { name: connectedServiceName, type: string }
 
 jobs:
-- template: job-base.yml
-  parameters:
-    displayName: Build
-    vmImage: windows-latest
+  - template: job-base.yml
+    parameters:
+      displayName: Build
+      vmImage: windows-latest
+      checkout: self
 
-    steps:
-    - template: ../steps/use-tfx-cli.yml
+      variables:
+        - template: ../variables/extension.yml
 
-    - ${{ if parameters.automaticVersion }}:
-      - task: QueryAzureDevOpsExtensionVersion@2
-        displayName: Query extension version
-        inputs:
-          connectTo: VsTeam
-          connectedServiceName: ${{ parameters.connectedServiceName }}
-          publisherId: ${{ parameters.publisherId }}
-          extensionId: ${{ parameters.extensionId }}
-          versionAction: Minor
-          setBuildNumber: true
+      steps:
+        - template: ../steps/use-tfx-cli.yml
 
-    - pwsh: ./build.ps1 -Build -Clear
-      displayName: Build tasks
+        - ${{ if parameters.automaticVersion }}:
+          - task: QueryAzureDevOpsExtensionVersion@2
+            displayName: Query extension version
+            inputs:
+              connectTo: VsTeam
+              connectedServiceName: ${{ parameters.connectedServiceName }}
+              publisherId: $(extension.publisherId)
+              extensionId: $(extension.id)
+              versionAction: Minor
+              setBuildNumber: true
 
-    - task: PackageAzureDevOpsExtension@2
-      displayName: Package extension
-      name: ${{ parameters.artifact }}
-      inputs:
-        patternManifest: vss-extension.json
-        publisherId: ${{ parameters.publisherId }}
-        extensionId: ${{ parameters.extensionId }}
-        extensionName: ${{ parameters.extensionName }}
-        extensionVersion: $(build.buildNumber)
-        updateTasksVersion: true
-        updateTasksVersionType: minor
-        updateTasksId: true
+        - pwsh: ./build.ps1 -Build -Clear
+          displayName: Build tasks
 
-    - publish: $(${{ parameters.artifact }}.extension.outputPath)
-      displayName: Publish ${{ parameters.artifact }} artifact
-      artifact: ${{ parameters.artifact }}
+        - task: PackageAzureDevOpsExtension@2
+          displayName: Package extension
+          name: vsix
+          inputs:
+            patternManifest: vss-extension.json
+            publisherId: $(extension.publisherId)
+            extensionId: $(extension.id)
+            extensionName: $(extension.name)
+            extensionVersion: $(build.buildNumber)
+            updateTasksVersion: true
+            updateTasksVersionType: minor
+            updateTasksId: true
+
+        - publish: $(vsix.extension.outputPath)
+          displayName: Publish VSIX artifact
+          artifact: VSIX

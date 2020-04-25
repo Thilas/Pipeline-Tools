@@ -1,18 +1,68 @@
 parameters:
-- name: version
-  displayName: Version
-  type: string
-  default: Automatic
+  - name: version
+    displayName: Version
+    type: string
+    default: Automatic
 
 name: ${{ parameters.version }}
 
 trigger:
-- master
+  - master
 pr:
-- master
+  - master
+
+variables:
+  - name: connectedServiceName
+    value: Visual Studio Marketplace
+    readonly: true
+
+  - name: gitHubConnection
+    value: GitHub Releases
+    readonly: true
 
 stages:
-- template: stages/all.yml
-  parameters:
-    master: ${{ eq(variables['build.sourceBranch'], 'refs/heads/master') }}
-    automaticVersion: ${{ eq(parameters.version, 'Automatic') }}
+  - stage: build
+    displayName: Build
+    dependsOn: []
+
+    jobs:
+      - template: jobs/build.yml
+        parameters:
+          automaticVersion: ${{ eq(parameters.version, 'Automatic') }}
+          connectedServiceName: $(connectedServiceName)
+
+  - stage: unitTests
+    displayName: Unit Tests
+    dependsOn: []
+
+    jobs:
+      - template: jobs/test.yml
+        parameters:
+          test: Unit
+          publishCodeCoverage: true
+
+  - stage: integrationTests
+    displayName: Integration Tests
+    dependsOn: []
+
+    jobs:
+      - template: jobs/test.yml
+        parameters:
+          test: Integration
+
+  - ${{ if eq(variables['build.sourceBranch'], 'refs/heads/master') }}:
+    - stage:
+      displayName: Deploy
+      dependsOn:
+        - build
+        - unitTests
+        - integrationTests
+
+      jobs:
+        - template: jobs/publish.yml
+          parameters:
+            connectedServiceName: $(connectedServiceName)
+
+        - template: jobs/release.yml
+          parameters:
+            gitHubConnection: $(gitHubConnection)

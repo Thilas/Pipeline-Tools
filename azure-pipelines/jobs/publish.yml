@@ -1,26 +1,26 @@
 parameters:
-- {name: connectedServiceName, type: string}
-- {name: artifact, type: string}
+  - { name: connectedServiceName, type: string }
 
 jobs:
-- template: deployment-base.yml
-  parameters:
-    displayName: Publish
-    vmImage: ubuntu-latest
-    environment: ${{ parameters.connectedServiceName }}
+  - template: deployment-base.yml
+    parameters:
+      name: Publish
+      displayName: Publish
+      vmImage: ubuntu-latest
+      environment: ${{ parameters.connectedServiceName }}
 
-    steps:
-    - template: ../steps/download-artifact.yml
-      parameters:
-        artifact: ${{ parameters.artifact }}
-        path: $(build.stagingDirectory)/${{ parameters.artifact }}
+      steps:
+        - template: ../steps/download-artifact.yml
+          parameters:
+            artifact: VSIX
+            path: $(build.stagingDirectory)/VSIX
 
-    - template: ../steps/use-tfx-cli.yml
+        - template: ../steps/use-tfx-cli.yml
 
-    - task: PublishAzureDevOpsExtension@2
-      displayName: Publish extension
-      inputs:
-        connectTo: VsTeam
-        connectedServiceName: ${{ parameters.connectedServiceName }}
-        fileType: vsix
-        vsixFile: $(build.stagingDirectory)/${{ parameters.artifact }}/*.vsix
+        - task: PublishAzureDevOpsExtension@2
+          displayName: Publish extension
+          inputs:
+            connectTo: VsTeam
+            connectedServiceName: ${{ parameters.connectedServiceName }}
+            fileType: vsix
+            vsixFile: $(build.stagingDirectory)/VSIX/*.vsix

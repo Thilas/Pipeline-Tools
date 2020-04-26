@@ -7,6 +7,7 @@ jobs:
     parameters:
       displayName: ${{ parameters.test }} Tests
       vmImage: windows-latest
+
       checkout: self
 
       steps:

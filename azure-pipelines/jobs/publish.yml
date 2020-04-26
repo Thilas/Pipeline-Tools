@@ -7,6 +7,7 @@ jobs:
       name: Publish
       displayName: Publish
       vmImage: ubuntu-latest
+
       environment: ${{ parameters.connectedServiceName }}
 
       steps:

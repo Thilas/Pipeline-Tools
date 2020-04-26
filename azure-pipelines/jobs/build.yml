@@ -8,7 +8,6 @@ jobs:
     parameters:
       displayName: Build
       vmImage: windows-latest
-      checkout: self
 
       variables:
         - template: ../variables/extension.yml
@@ -21,6 +20,8 @@ jobs:
           - name: version.patch
             value: $[ counter(variables['system.pullRequest.pullRequestNumber'], 1) ]
             readonly: true
+
+      checkout: self
 
       steps:
         - template: ../steps/use-tfx-cli.yml

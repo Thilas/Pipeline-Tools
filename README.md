@@ -24,9 +24,9 @@ There is one parameter that can be set with this task:
 
 - Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-**Sample**
+**Output**
 
-``` ini
+``` text
 Application                                              Version         Size (MB)
 -----------                                              -------         ---------
 7-Zip 19.00 (x64)                                        19.00                 5.0
@@ -37,7 +37,7 @@ Azure Cosmos DB Emulator                                 2.9.2               792
 CMake                                                    3.17.1               94.3
 Git version 2.26.1                                       2.26.1              250.3
 Google Chrome                                            81.0.4044.113         0.0
-# ...
+...
 ```
 
 ## List Files Task
@@ -49,9 +49,9 @@ There are two parameters that can be set with this task:
 - Root Directory - all files and directories beneath the root directory will be listed (recursively).
 - Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-**Sample**
+**Output**
 
-``` ini
+``` text
 Path                                                Size (KB)
 ----                                                ---------
 C:\Sources\Pipeline-Tools\.editorconfig                   0.6
@@ -63,7 +63,7 @@ C:\Sources\Pipeline-Tools\.vscode\settings.json           1.0
 C:\Sources\Pipeline-Tools\_build\
 C:\Sources\Pipeline-Tools\_build\nuget.exe            6,359.4
 C:\Sources\Pipeline-Tools\_build\packages\
-# ...
+...
 ```
 
 ## List System Info Task
@@ -74,29 +74,29 @@ There is one parameter that can be set with this task:
 
 - Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-**Sample**
+**Output**
 
-``` ini
+``` text
 Computer     : Virtual Machine
 Manufacturer : Microsoft Corporation
-# ...
+...
 Processor                                       Cores   Threads   Virtualization
 ---------                                       -----   -------   --------------
 Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz       2         4            False
-# ...
+...
 Disk         RPM   Bus   Size (GB)   Allocated (GB)    Status
 ----         ---   ---   ---------   --------------    ------
 Virtual HD     0   ATA       270.0            270.0   Healthy
-# ...
+...
 Video Controller          RAM (GB)   Resolution   Color Depth
 ----------------          --------   ----------   -----------
 Microsoft Hyper-V Video        0.0   1024 x 768            32
-# ...
+...
 Operating System           : Microsoft Windows Server 2019 Datacenter
 Culture                    : en-US
 Total Physical Memory (GB) : 7.0
 Free Physical Memory (GB)  : 5.4
-# ...
+...
 Name Volume  File System Compressed Size (GB) Free (GB)
 ---- ------  ----------- ---------- --------- ---------
 C:   Windows NTFS        False          255.5     120.0
@@ -110,9 +110,9 @@ There is one parameter that can be set with this task:
 
 - Execute on Debug Only - if checked, the task will execute only if **system.debug** is set to **true**.
 
-**Sample**
+**Output**
 
-``` ini
+``` text
 Variable                         Value
 --------                         -----
 AGENT_BUILDDIRECTORY             D:\a\1
@@ -130,7 +130,7 @@ BUILD_ARTIFACTSTAGINGDIRECTORY   D:\a\1\a
 BUILD_BINARIESDIRECTORY          D:\a\1\b
 BUILD_BUILDID                    655
 BUILD_BUILDNUMBER                2.6.0
-# ...
+...
 ```
 
 ## Retain Run Task

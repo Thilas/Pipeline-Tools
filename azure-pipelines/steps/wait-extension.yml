@@ -2,12 +2,12 @@ steps:
   - pwsh: |
       $organizationUri = [uri] $Env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
       if ($organizationUri.AbsolutePath -notmatch "^/(?<Organization>[^/]+)/") {
-        throw "Unable to get organization name: $organizationUri."
+        throw "Unable to get organization name: $Env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI."
       }
       $uri = "https://extmgmt.dev.azure.com/{0}/_apis/extensionmanagement/installedextensionsbyname/{1}/{2}?api-version=6.0-preview.1" -f $Matches.Organization, $Env:EXTENSION_PUBLISHERID, $Env:EXTENSION_ID
       "Uri: $uri"
-      $headers = @{ Authorization = "Bearer $Env:AccessToken"}
-      $buildNumber = $Env:BUILD_BUILDNUMBER -as [version]
+      $headers = @{ Authorization = "Bearer $Env:accessToken"}
+      $buildNumber = [version] $Env:BUILD_BUILDNUMBER
       "Waiting for version: $buildNumber..."
       while ($true) {
         $result = Invoke-RestMethod -Uri $uri -UseBasicParsing -Headers $headers -ContentType 'application/json'
@@ -27,4 +27,4 @@ steps:
     displayName: Wait
     timeoutInMinutes: 10
     env:
-      AccessToken: $(system.accessToken)
+      accessToken: $(system.accessToken)

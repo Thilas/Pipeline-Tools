@@ -8,7 +8,9 @@ jobs:
         - template: ../variables/extension.yml
 
       steps:
-        - bash: echo '##vso[build.updatebuildnumber]$(resources.pipeline.pipelineTools.runName)'
+        - bash: echo "##vso[build.updatebuildnumber]$runName"
           displayName: Update build number
+          env:
+            runName: $(resources.pipeline.pipelineTools.runName)
 
         - template: ../steps/wait-extension.yml

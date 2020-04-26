@@ -1,5 +1,6 @@
 parameters:
-  - { name: automaticVersion, type: boolean }
+  - { name: versionOverride, type: string, default: '' }
+  - { name: master, type: boolean }
   - { name: connectedServiceName, type: string }
 
 jobs:
@@ -12,19 +13,36 @@ jobs:
       variables:
         - template: ../variables/extension.yml
 
+        - name: version.override
+          value: ${{ parameters.versionOverride }}
+          readonly: true
+
+        - ${{ if not(or(parameters.versionOverride, parameters.master)) }}:
+          - name: version.patch
+            value: $[ counter(variables['system.pullRequest.pullRequestNumber'], 1) ]
+            readonly: true
+
       steps:
         - template: ../steps/use-tfx-cli.yml
 
-        - ${{ if parameters.automaticVersion }}:
-          - task: QueryAzureDevOpsExtensionVersion@2
-            displayName: Query extension version
-            inputs:
-              connectTo: VsTeam
-              connectedServiceName: ${{ parameters.connectedServiceName }}
-              publisherId: $(extension.publisherId)
-              extensionId: $(extension.id)
+        - task: QueryAzureDevOpsExtensionVersion@2
+          displayName: Query extension version
+          inputs:
+            connectTo: VsTeam
+            connectedServiceName: ${{ parameters.connectedServiceName }}
+            publisherId: $(extension.publisherId)
+            extensionId: $(extension.id)
+            ${{ if parameters.master }}:
               versionAction: Minor
-              setBuildNumber: true
+            setBuildNumber: true
+            extensionVersionOverride: version.override
+
+        - ${{ if not(or(parameters.master, parameters.versionOverride)) }}:
+          - pwsh: |
+              $version = [version] $Env:BUILD_BUILDNUMBER
+              $version = "{0}.{1}" -f $version.ToString(2), $Env:VERSION_PATCH
+              "##vso[build.updatebuildnumber]$version"
+            displayName: Update build number
 
         - pwsh: ./build.ps1 -Build -Clear
           displayName: Build tasks

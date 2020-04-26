@@ -7,10 +7,11 @@ jobs:
       name: Release
       displayName: Release
       vmImage: ubuntu-latest
-      environment: ${{ parameters.gitHubConnection }}
 
       variables:
         - template: ../variables/extension.yml
+
+      environment: ${{ parameters.gitHubConnection }}
 
       steps:
         - template: ../steps/download-artifact.yml

@@ -1,9 +1,17 @@
+parameters:
+  - { name: vmImage, type: string }
+
 steps:
-  - task: ListVariables@1
-    displayName: List variables
+  - ${{ if not(startsWith(parameters.vmImage, 'windows-')) }}:
+    - bash: env
+      displayName: List variables
 
-  - task: ListSystemInfo@1
-    displayName: List system information
+  - ${{ if startsWith(parameters.vmImage, 'windows-') }}:
+    - task: ListVariables@1
+      displayName: List variables
 
-  - task: ListApps@1
-    displayName: List installed applications
+    - task: ListSystemInfo@1
+      displayName: List system information
+
+    - task: ListApps@1
+      displayName: List installed applications

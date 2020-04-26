@@ -23,5 +23,7 @@ jobs:
       - checkout: ${{ parameters.checkout }}
 
       - template: ../steps/list-info.yml
+        parameters:
+          vmImage: ${{ parameters.vmImage }}
 
       - ${{ parameters.steps }}

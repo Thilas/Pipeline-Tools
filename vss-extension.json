@@ -13,7 +13,6 @@
     "Azure Pipelines"
   ],
   "tags": [
-    "comment",
     "diagnostic",
     "directory",
     "file",
@@ -57,8 +56,6 @@
     "theme": "dark"
   },
   "files": [{
-    "path": "Comment"
-  }, {
     "path": "ListApps"
   }, {
     "path": "ListFiles"
@@ -70,13 +67,6 @@
     "path": "RetainRun"
   }],
   "contributions": [{
-    "id": "Comment",
-    "type": "ms.vss-distributed-task.task",
-    "targets": ["ms.vss-distributed-task.tasks"],
-    "properties": {
-      "name": "Comment"
-    }
-  }, {
     "id": "ListApps",
     "type": "ms.vss-distributed-task.task",
     "targets": ["ms.vss-distributed-task.tasks"],

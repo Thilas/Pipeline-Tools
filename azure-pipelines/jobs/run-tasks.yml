@@ -12,18 +12,6 @@ jobs:
         system.debug: ${{ parameters.debug }}
 
       steps:
-        - task: ListSystemInfo@1
-          displayName: List system information
-          condition: always()
-
-        - task: ListVariables@1
-          displayName: List variables
-          condition: always()
-
-        - task: ListApps@1
-          displayName: List installed applications
-          condition: always()
-
         - task: ListFiles@1
           displayName: List files
           condition: always()

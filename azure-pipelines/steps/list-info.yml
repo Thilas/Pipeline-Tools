@@ -1,3 +1,9 @@
 steps:
-  - bash: env
-    displayName: List environment variables
+  - task: ListVariables@1
+    displayName: List variables
+
+  - task: ListSystemInfo@1
+    displayName: List system information
+
+  - task: ListApps@1
+    displayName: List installed applications

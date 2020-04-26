@@ -4,8 +4,6 @@ parameters:
     type: string
     default: Automatic
 
-name: ${{ parameters.version }}
-
 trigger:
   - master
 pr:
@@ -28,7 +26,9 @@ stages:
     jobs:
       - template: jobs/build.yml
         parameters:
-          automaticVersion: ${{ eq(parameters.version, 'Automatic') }}
+          ${{ if ne(parameters.version, 'Automatic') }}:
+            versionOverride: ${{ parameters.version }}
+          master: ${{ eq(variables['build.sourceBranch'], 'refs/heads/master') }}
           connectedServiceName: $(connectedServiceName)
 
   - stage: unitTests

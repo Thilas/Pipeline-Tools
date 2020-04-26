@@ -40,6 +40,35 @@ function New-Property {
     }
 }
 
+function ConvertTo-Enum {
+    [CmdletBinding()]
+    [OutputType([hashtable])]
+    param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [type] $Type,
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [ValidateNotNull()]
+        [object] $Property
+    )
+    process {
+        $result = $Property | New-Property
+        # Creating a new scope as a workaround for a PowerShell bug related to GetNewClosure().
+        # See https://stackoverflow.com/a/24766059
+        $result.Expression = & {
+            $type = $Type
+            if ($result.Expression -is [scriptblock]) {
+                $expression = $result.Expression
+                { [enum]::ToObject($type, ($_ | ForEach-Object $expression)) }.GetNewClosure()
+            } else {
+                $property = $result.Expression
+                { [enum]::ToObject($type, $_.$property) }.GetNewClosure()
+            }
+        }
+        $result
+    }
+}
+
 function ConvertTo-Unit {
     [CmdletBinding()]
     [OutputType([hashtable])]
@@ -60,12 +89,13 @@ function ConvertTo-Unit {
         # Creating a new scope as a workaround for a PowerShell bug related to GetNewClosure().
         # See https://stackoverflow.com/a/24766059
         $result.Expression = & {
-            $expression = $result.Expression
             $divisor = Invoke-Expression "1$Unit / 1$From"
-            if ($expression -is [scriptblock]) {
+            if ($result.Expression -is [scriptblock]) {
+                $expression = $result.Expression
                 { ($_ | ForEach-Object $expression) / $divisor }.GetNewClosure()
             } else {
-                { $_.$expression / $divisor }.GetNewClosure()
+                $property = $result.Expression
+                { $_.$property / $divisor }.GetNewClosure()
             }
         }
         $result | New-Property -Name "$name ($Unit)" -Force
@@ -74,5 +104,6 @@ function ConvertTo-Unit {
 
 Export-ModuleMember -Function @(
     "New-Property"
+    "ConvertTo-Enum"
     "ConvertTo-Unit"
 )

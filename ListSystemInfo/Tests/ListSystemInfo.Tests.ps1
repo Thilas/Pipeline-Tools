@@ -2,9 +2,8 @@
 
 Describe "List System Info Task" {
     # Arrange
-    Mock "New-CimSession" { New-MockObject CimSession }
+    Mock "New-CimSession" { New-MockObject ([CimSession]) }
     Mock "Get-CimInstance" { @([pscustomobject] @{ Id = 1 }) }
-    Mock "Get-PhysicalDisk" { @([pscustomobject] @{ Id = 1 }) } -RemoveParameterType "Usage", "HealthStatus"
     Mock "Remove-CimSession"
 
     It "lists system info when debugOnly is false" {
@@ -16,7 +15,6 @@ Describe "List System Info Task" {
         Assert-VerifiableMock
         Assert-MockCalled "New-CimSession" -Scope It
         Assert-MockCalled "Get-CimInstance" -Scope It
-        Assert-MockCalled "Get-PhysicalDisk" -Scope It
         Assert-MockCalled "Remove-CimSession" -Scope It
     }
 
@@ -30,7 +28,6 @@ Describe "List System Info Task" {
         Assert-VerifiableMock
         Assert-MockCalled "New-CimSession" -Times 0 -Scope It
         Assert-MockCalled "Get-CimInstance" -Times 0 -Scope It
-        Assert-MockCalled "Get-PhysicalDisk" -Times 0 -Scope It
         Assert-MockCalled "Remove-CimSession" -Times 0 -Scope It
     }
 
@@ -43,7 +40,6 @@ Describe "List System Info Task" {
         Assert-VerifiableMock
         Assert-MockCalled "New-CimSession" -Scope It
         Assert-MockCalled "Get-CimInstance" -Scope It
-        Assert-MockCalled "Get-PhysicalDisk" -Scope It
         Assert-MockCalled "Remove-CimSession" -Scope It
     }
 }

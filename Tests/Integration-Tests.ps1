@@ -14,16 +14,6 @@ Describe "Integration Tests" {
     # Throw an error if a task fails
     Mock "Write-Host" -ParameterFilter { $Object -eq "##vso[task.complete result=Failed]" } { throw "Task has failed." }
 
-    Context "Comment Task" {
-        It "writes comments when includeCommentsInLog is true" {
-            # Arrange
-            $Env:INPUT_COMMENTS             = "Some multiline`ncomments..."
-            $Env:INPUT_INCLUDECOMMENTSINLOG = "true"
-            # Act
-            Invoke-VstsTaskScript { . "$PSScriptRoot/../Comment/Comment.ps1" }
-        }
-    }
-
     Context "List Apps Task" {
         It "lists apps when debugOnly is true and system.debug is true" {
             # Assert

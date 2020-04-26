@@ -16,15 +16,6 @@ jobs:
           displayName: List files
           condition: always()
 
-        - task: Comment@1
-          displayName: Comment
-          condition: always()
-          inputs:
-            comments: |
-              Here are some ...
-              ... awesome comments!
-            includeCommentsInLog: true
-
         - task: RetainRun@1
           displayName: Retain run
           condition: always()

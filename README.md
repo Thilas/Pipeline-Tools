@@ -27,16 +27,16 @@ There is one parameter that can be set with this task:
 **Output**
 
 ``` text
-Application                                              Version         Size (MB)
------------                                              -------         ---------
-7-Zip 19.00 (x64)                                        19.00                 5.0
-Active Directory Authentication Library for SQL Server   15.0.1300.359         3.2
-Application Verifier x64 External Package                10.1.18362.1          7.1
-AWS Command Line Interface v2                            2.0.7.0              78.1
-Azure Cosmos DB Emulator                                 2.9.2               792.9
-CMake                                                    3.17.1               94.3
-Git version 2.26.1                                       2.26.1              250.3
-Google Chrome                                            81.0.4044.113         0.0
+Application                                            Version       Size (MB)
+-----------                                            -------       ---------
+7-Zip 19.00 (x64)                                      19.00               5.0
+Active Directory Authentication Library for SQL Server 15.0.1300.359       3.2
+Application Verifier x64 External Package              10.1.18362.1        7.1
+AWS Command Line Interface v2                          2.0.7.0            78.1
+Azure Cosmos DB Emulator                               2.9.2             792.9
+CMake                                                  3.17.1             94.3
+Git version 2.26.1                                     2.26.1            250.3
+Google Chrome                                          81.0.4044.113       0.0
 ...
 ```
 
@@ -52,16 +52,16 @@ There are two parameters that can be set with this task:
 **Output**
 
 ``` text
-Path                                                Size (KB)
-----                                                ---------
-C:\Sources\Pipeline-Tools\.editorconfig                   0.6
-C:\Sources\Pipeline-Tools\.gitattributes                  0.5
-C:\Sources\Pipeline-Tools\.gitignore                      0.1
+Path                                            Size (KB)
+----                                            ---------
+C:\Sources\Pipeline-Tools\.editorconfig               0.6
+C:\Sources\Pipeline-Tools\.gitattributes              0.5
+C:\Sources\Pipeline-Tools\.gitignore                  0.1
 C:\Sources\Pipeline-Tools\.vscode\
-C:\Sources\Pipeline-Tools\.vscode\launch.json             1.3
-C:\Sources\Pipeline-Tools\.vscode\settings.json           1.0
+C:\Sources\Pipeline-Tools\.vscode\launch.json         1.3
+C:\Sources\Pipeline-Tools\.vscode\settings.json       1.0
 C:\Sources\Pipeline-Tools\_build\
-C:\Sources\Pipeline-Tools\_build\nuget.exe            6,359.4
+C:\Sources\Pipeline-Tools\_build\nuget.exe        6,359.4
 C:\Sources\Pipeline-Tools\_build\packages\
 ...
 ```
@@ -80,17 +80,17 @@ There is one parameter that can be set with this task:
 Computer     : Virtual Machine
 Manufacturer : Microsoft Corporation
 ...
-Processor                                       Cores   Threads   Virtualization
----------                                       -----   -------   --------------
-Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz       2         4            False
+Processor                                     Cores Threads Virtualization
+---------                                     ----- ------- --------------
+Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz     2       4          False
 ...
-Disk         RPM   Bus   Size (GB)   Allocated (GB)    Status
-----         ---   ---   ---------   --------------    ------
-Virtual HD     0   ATA       270.0            270.0   Healthy
+Disk       RPM Bus Size (GB) Allocated (GB)  Status
+----       --- --- --------- --------------  ------
+Virtual HD   0 ATA     270.0          270.0 Healthy
 ...
-Video Controller          RAM (GB)   Resolution   Color Depth
-----------------          --------   ----------   -----------
-Microsoft Hyper-V Video        0.0   1024 x 768            32
+Video Controller        RAM (GB) Resolution Color Depth
+----------------        -------- ---------- -----------
+Microsoft Hyper-V Video      0.0 1024 x 768          32
 ...
 Operating System           : Microsoft Windows Server 2019 Datacenter
 Culture                    : en-US
@@ -113,23 +113,23 @@ There is one parameter that can be set with this task:
 **Output**
 
 ``` text
-Variable                         Value
---------                         -----
-AGENT_BUILDDIRECTORY             D:\a\1
-AGENT_ID                         78
-AGENT_JOBSTATUS                  Succeeded
-AGENT_MACHINENAME                WIN-KJA10851F8D
-AGENT_NAME                       Hosted Agent
-AGENT_OS                         Windows_NT
-AGENT_OSARCHITECTURE             X64
-AGENT_ROOTDIRECTORY              D:\a
-AGENT_TEMPDIRECTORY              D:\a\_temp
-AGENT_VERSION                    2.166.4
-AGENT_WORKFOLDER                 D:\a
-BUILD_ARTIFACTSTAGINGDIRECTORY   D:\a\1\a
-BUILD_BINARIESDIRECTORY          D:\a\1\b
-BUILD_BUILDID                    655
-BUILD_BUILDNUMBER                2.6.0
+Variable                       Value
+--------                       -----
+AGENT_BUILDDIRECTORY           D:\a\1
+AGENT_ID                       78
+AGENT_JOBSTATUS                Succeeded
+AGENT_MACHINENAME              WIN-KJA10851F8D
+AGENT_NAME                     Hosted Agent
+AGENT_OS                       Windows_NT
+AGENT_OSARCHITECTURE           X64
+AGENT_ROOTDIRECTORY            D:\a
+AGENT_TEMPDIRECTORY            D:\a\_temp
+AGENT_VERSION                  2.166.4
+AGENT_WORKFOLDER               D:\a
+BUILD_ARTIFACTSTAGINGDIRECTORY D:\a\1\a
+BUILD_BINARIESDIRECTORY        D:\a\1\b
+BUILD_BUILDID                  655
+BUILD_BUILDNUMBER              2.6.0
 ...
 ```
 

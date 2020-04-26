@@ -179,7 +179,7 @@ $result = @(
             "CSDVersion"             | New-Property -Name "Service Pack"
             "OSArchitecture"         | New-Property -Name "Architecture"
             "RegisteredUser"         | New-Property -Name "Registered User"
-            New-Property { $_.MUILanguages -join ", " } -Name "Languages"
+            New-Property { $_.MUILanguages -join ", " } -Name "Culture"
             "CodeSet"                | New-Property -Name "Code Page"
             "InstallDate"            | New-Property -Name "Install Date"
             "LastBootUpTime"         | New-Property -Name "Boot Up Time"

@@ -84,6 +84,54 @@ InModuleScope "Tools" {
         }
     }
 
+    Describe "ConvertTo-Enum" {
+        enum FakeEnum {
+            Value = 1
+            Other = 2
+        }
+        $FakeStringProperty           = "Property"
+        $FakeOtherProperty            = "Other Property"
+        $FakeScriptblockProperty      = { $_.$FakeStringProperty + $_.$FakeOtherProperty }
+        $FakeObject                   = @{
+            $FakeStringProperty       = $FakeStringPropertyValue = [int] [FakeEnum]::Value
+            $FakeOtherProperty        = $FakeOtherPropertyValue  = [int] [FakeEnum]::Other
+        }
+        $FakeScriptblockPropertyValue = $FakeStringPropertyValue + $FakeOtherPropertyValue
+        $FakeName                     = "Name"
+        $FakeFormat                   = "Format"
+
+        It "supports string property" {
+            # Act
+            $actualValue = $FakeStringProperty | ConvertTo-Enum ([FakeEnum])
+            # Assert
+            $actualValue              | Should -BeOfType [hashtable]
+            $actualValue.Name         | Should -BeNullOrEmpty
+            $actualValue.FormatString | Should -BeNullOrEmpty
+            $FakeObject | ForEach-Object $actualValue.Expression | Should -BeExactly $FakeStringPropertyValue
+        }
+
+        It "supports scriptblock property" {
+            # Act
+            $actualValue = $FakeScriptblockProperty | ConvertTo-Enum ([FakeEnum])
+            # Assert
+            $actualValue              | Should -BeOfType [hashtable]
+            $actualValue.Name         | Should -BeNullOrEmpty
+            $actualValue.FormatString | Should -BeNullOrEmpty
+            $FakeObject | ForEach-Object $actualValue.Expression | Should -BeExactly $FakeScriptblockPropertyValue
+        }
+
+        It "supports named property with format" {
+            # Arrange
+            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeFormat
+            # Act
+            $actualValue = $property | ConvertTo-Enum ([FakeEnum])
+            # Assert
+            $actualValue              | Should -BeOfType [hashtable]
+            $actualValue.Name         | Should -BeExactly $FakeName
+            $actualValue.FormatString | Should -BeExactly $FakeFormat
+        }
+    }
+
     Describe "ConvertTo-Unit" {
         $FakeUnit                     = "GB"
         $FakeNameSuffix               = " ($FakeUnit)"
@@ -121,7 +169,7 @@ InModuleScope "Tools" {
 
         It "supports named property with format" {
             # Arrange
-            $property = New-Property $FakeStringProperty -Name $FakeName -Force $FakeOtherFormat
+            $property = New-Property $FakeStringProperty -Name $FakeName -Format $FakeOtherFormat
             # Act
             $actualValue = $property | ConvertTo-Unit $FakeUnit
             # Assert

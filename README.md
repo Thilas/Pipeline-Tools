@@ -70,3 +70,5 @@ There are two parameters that can be set with this task:
 ## Feedback, Support and Contribution
 
 If you like this set of tasks, please leave a review and rating. If you have any suggestions and/or problems, please [file an issue so I can get it resolved](https://github.com/Thilas/Pipeline-Tools/issues). Any contribution is most welcome.
+
+Icons made by [phatplus](https://www.flaticon.com/authors/phatplus) and [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)

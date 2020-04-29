@@ -25,3 +25,7 @@ jobs:
             connectedServiceName: ${{ parameters.connectedServiceName }}
             fileType: vsix
             vsixFile: $(build.stagingDirectory)/VSIX/*.vsix
+
+  - template: wait.yml
+    parameters:
+      dependsOn: Publish

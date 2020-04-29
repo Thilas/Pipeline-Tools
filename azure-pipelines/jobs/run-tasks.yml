@@ -1,15 +1,19 @@
 parameters:
   - { name: displayName, type: string }
-  - { name: debug, type: boolean, default: false }
 
 jobs:
   - template: job-base.yml
     parameters:
-      displayName: ${{ parameters.displayName }}
+      displayName: System Tests
       vmImage: windows-latest
 
-      variables:
-        system.debug: ${{ parameters.debug }}
+      strategy:
+        maxParallel: 1
+        matrix:
+          Debug:
+            system.debug: true
+          Normal:
+            system.debug: false
 
       steps:
         - task: ListFiles@1

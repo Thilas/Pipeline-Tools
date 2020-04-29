@@ -5,7 +5,7 @@ parameters:
 jobs:
   - template: job-base.yml
     parameters:
-      displayName: ${{ parameters.test }} Tests
+      displayName: Run ${{ parameters.test }} tests
       vmImage: windows-latest
 
       checkout: self

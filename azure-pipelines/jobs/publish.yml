@@ -18,10 +18,14 @@ jobs:
 
         - template: ../steps/use-tfx-cli.yml
 
-        - task: PublishAzureDevOpsExtension@2
-          displayName: Publish extension
-          inputs:
-            connectTo: VsTeam
-            connectedServiceName: ${{ parameters.connectedServiceName }}
-            fileType: vsix
-            vsixFile: $(build.stagingDirectory)/VSIX/*.vsix
+        # - task: PublishAzureDevOpsExtension@2
+        #   displayName: Publish extension
+        #   inputs:
+        #     connectTo: VsTeam
+        #     connectedServiceName: ${{ parameters.connectedServiceName }}
+        #     fileType: vsix
+        #     vsixFile: $(build.stagingDirectory)/VSIX/*.vsix
+
+  - template: wait.yml
+    parameters:
+      dependsOn: Publish

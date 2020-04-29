@@ -66,3 +66,27 @@ stages:
         - template: jobs/release.yml
           parameters:
             gitHubConnection: $(gitHubConnection)
+
+    - stage:
+      displayName: Wait for Update
+
+      jobs:
+        - template: jobs/wait.yml
+
+    - stage:
+      displayName: Test (Debug)
+
+      jobs:
+        - template: jobs/run-tasks.yml
+          parameters:
+            displayName: Test (Debug)
+            debug: true
+
+    - stage:
+      displayName: Test (Normal)
+
+      jobs:
+        - template: jobs/run-tasks.yml
+          parameters:
+            displayName: Test (Normal)
+            debug: false

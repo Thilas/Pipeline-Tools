@@ -1,16 +1,15 @@
+parameters:
+  - { name: dependsOn, type: object }
+
 jobs:
   - template: job-base.yml
     parameters:
-      displayName: Wait
-      vmImage: windows-latest
+      displayName: Wait for Update
+      dependsOn: ${{ parameters.dependsOn }}
+      vmImage: ubuntu-latest
 
       variables:
         - template: ../variables/extension.yml
 
       steps:
-        - bash: echo "##vso[build.updatebuildnumber]$runName"
-          displayName: Update build number
-          env:
-            runName: $(resources.pipeline.pipelineTools.runName)
-
         - template: ../steps/wait-extension.yml

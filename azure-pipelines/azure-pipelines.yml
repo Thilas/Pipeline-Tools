@@ -50,27 +50,25 @@ stages:
         parameters:
           test: Integration
 
-  - ${{ if eq(variables['build.sourceBranch'], 'refs/heads/master') }}:
-    - stage:
-      displayName: Deploy
-      dependsOn:
-        - build
-        - unitTests
-        - integrationTests
+  # - ${{ if eq(variables['build.sourceBranch'], 'refs/heads/master') }}:
+  - stage:
+    displayName: Deploy
+    dependsOn:
+      - build
+      - unitTests
+      - integrationTests
 
-      jobs:
-        - template: jobs/publish.yml
-          parameters:
-            connectedServiceName: $(connectedServiceName)
+    jobs:
+      - template: jobs/publish.yml
+        parameters:
+          connectedServiceName: $(connectedServiceName)
 
-        - template: jobs/release.yml
-          parameters:
-            gitHubConnection: $(gitHubConnection)
+      - template: jobs/release.yml
+        parameters:
+          gitHubConnection: $(gitHubConnection)
 
-    - stage:
-      displayName: System Tests
+  - stage:
+    displayName: System Tests
 
-      jobs:
-        - template: jobs/run-tasks.yml
-          parameters:
-            displayName: Test
+    jobs:
+      - template: jobs/run-tasks.yml

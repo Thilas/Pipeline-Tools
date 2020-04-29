@@ -1,6 +1,3 @@
-parameters:
-  - { name: displayName, type: string }
-
 jobs:
   - template: job-base.yml
     parameters:
@@ -16,6 +13,8 @@ jobs:
             system.debug: false
 
       steps:
+        # ListApps, ListSystemInfo and ListVariables tasks are already called in job-base.yml
+
         - task: ListFiles@1
           displayName: List files
           condition: always()

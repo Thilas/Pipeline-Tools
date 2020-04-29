@@ -1,17 +1,23 @@
-parameters:
-  - { name: displayName, type: string }
-  - { name: debug, type: boolean, default: false }
-
 jobs:
   - template: job-base.yml
     parameters:
-      displayName: ${{ parameters.displayName }}
+      displayName: Run System tests
       vmImage: windows-latest
 
+      strategy:
+        maxParallel: 1
+        matrix:
+          Debug:
+            debug: true
+          Normal:
+            debug: false
+
       variables:
-        system.debug: ${{ parameters.debug }}
+        system.debug: $(debug)
 
       steps:
+        # ListApps, ListSystemInfo and ListVariables tasks are already called in job-base.yml
+
         - task: ListFiles@1
           displayName: List files
           condition: always()

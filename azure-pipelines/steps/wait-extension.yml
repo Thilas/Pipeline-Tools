@@ -11,7 +11,9 @@ steps:
       "Waiting for version: $buildNumber..."
       while ($true) {
         $result = Invoke-RestMethod -Uri $uri -UseBasicParsing -Headers $headers -ContentType 'application/json'
-        $result | Format-List
+        if ($Env:SYSTEM_DEBUG -in "1", "true") {
+          $result | Format-List
+        }
         $version = $result.version -as [version]
         if ($version -eq $buildNumber) {
           "Extension is up-to-date: $version"
@@ -24,7 +26,7 @@ steps:
         "Current version: $version..."
         Start-Sleep 10
       }
-    displayName: Wait
+    displayName: Wait for extension update
     timeoutInMinutes: 10
     env:
       accessToken: $(system.accessToken)

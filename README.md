@@ -6,7 +6,6 @@ This extension provides several pipeline tasks that can help you diagnose your W
 This extension is a fork of [VSTS-Tools Build Extensions](https://marketplace.visualstudio.com/items?itemName=moonspace-labs-llc.vsts-tools-build-extensions) and started fixing warnings in the original tasks.
 
 [![Build Status](https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline-Tools?branchName=master&label=build)](https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=10&branchName=master)
-[![Test Status](https://dev.azure.com/totodem/Pipeline-Tools/_apis/build/status/Pipeline%20Tools%20Test?branchName=master&label=test)](https://dev.azure.com/totodem/Pipeline-Tools/_build/latest?definitionId=11&branchName=master)
 
 Available tasks:
 

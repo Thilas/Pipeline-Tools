@@ -1,7 +1,11 @@
+parameters:
+  - { name: dependsOn, type: object }
+
 jobs:
   - template: job-base.yml
     parameters:
       displayName: Run System tests
+      dependsOn: ${{ parameters.dependsOn }}
       vmImage: windows-latest
 
       strategy:
@@ -13,7 +17,9 @@ jobs:
             debug: false
 
       variables:
-        system.debug: $(debug)
+        - name: system.debug
+          value: $(debug)
+          readonly: true
 
       steps:
         # ListApps, ListSystemInfo and ListVariables tasks are already called in job-base.yml

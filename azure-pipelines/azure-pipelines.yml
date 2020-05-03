@@ -66,9 +66,3 @@ stages:
         - template: jobs/release.yml
           parameters:
             gitHubConnection: $(gitHubConnection)
-
-  - stage:
-    displayName: System Tests
-
-    jobs:
-      - template: jobs/run-tasks.yml

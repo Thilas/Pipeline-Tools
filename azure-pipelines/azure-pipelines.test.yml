@@ -1,0 +1,36 @@
+resources:
+  pipelines:
+    - pipeline: pipelineTools
+      source: Pipeline Tools
+      branch: master
+      trigger:
+        branches:
+          - master
+
+trigger: none
+pr: none
+
+stages:
+  - stage:
+    displayName: System Tests
+
+    jobs:
+      - job: initialize
+        displayName: Initialize
+
+        pool:
+          vmImage: ubuntu-latest
+
+        timeoutInMinutes: 20
+        cancelTimeoutInMinutes: 5
+
+        steps:
+          - checkout: none
+          - bash: echo "##vso[build.updatebuildnumber]$runName"
+            displayName: Update build number
+            env:
+              runName: $(resources.pipeline.pipelineTools.runName)
+
+      - template: jobs/run-tasks.yml
+        parameters:
+          dependsOn: initialize

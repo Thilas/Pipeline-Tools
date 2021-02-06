@@ -18,7 +18,7 @@ jobs:
 
         - template: ../steps/use-tfx-cli.yml
 
-        - task: PublishAzureDevOpsExtension@2
+        - task: PublishAzureDevOpsExtension@3
           displayName: Publish extension
           inputs:
             connectTo: VsTeam

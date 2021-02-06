@@ -26,7 +26,7 @@ jobs:
       steps:
         - template: ../steps/use-tfx-cli.yml
 
-        - task: QueryAzureDevOpsExtensionVersion@2
+        - task: QueryAzureDevOpsExtensionVersion@3
           displayName: Query extension version
           inputs:
             connectTo: VsTeam
@@ -48,7 +48,7 @@ jobs:
         - pwsh: ./build.ps1 -Build -Clear
           displayName: Build tasks
 
-        - task: PackageAzureDevOpsExtension@2
+        - task: PackageAzureDevOpsExtension@3
           displayName: Package extension
           name: vsix
           inputs:

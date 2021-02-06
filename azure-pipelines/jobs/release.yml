@@ -19,11 +19,11 @@ jobs:
             artifact: VSIX
             path: $(build.stagingDirectory)/VSIX
 
-        - task: GitHubRelease@0
+        - task: GitHubRelease@1
           displayName: Release extension
           inputs:
             gitHubConnection: ${{ parameters.gitHubConnection }}
-            tagSource: manual
+            tagSource: userSpecifiedTag
             tag: v$(build.buildNumber)
             title: $(extension.name) v$(build.buildNumber)
             assets: $(build.stagingDirectory)/VSIX/*

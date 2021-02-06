@@ -93,7 +93,7 @@ $result = @(
         Properties = @(
             "DeviceId"      | New-Property -Name "Id"
             "Model"         | New-Property -Name "Disk"
-            "Type"
+            "Type"          | New-Property -Name "TT"
             "MediaType"     | New-Property -Name "Type" | ConvertTo-Enum ([MediaType])
             "SpindleSpeed"  | New-Property -Name "RPM"
             "BusType"       | New-Property -Name "Bus" | ConvertTo-Enum ([BusType])

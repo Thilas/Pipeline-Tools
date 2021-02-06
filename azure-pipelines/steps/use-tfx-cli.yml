@@ -1,5 +1,5 @@
 steps:
-  - task: TfxInstaller@2
+  - task: TfxInstaller@3
     displayName: Use Node CLI for Azure DevOps
     inputs:
       version: v0.7.x
